@@ -1,6 +1,6 @@
 package com.thenorthw.tc.face.form.user;
 
-import com.thenorthw.blog.common.utils.ShortUUIDUtil;
+import com.thenorthw.tc.common.utils.ShortUUIDUtil;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;

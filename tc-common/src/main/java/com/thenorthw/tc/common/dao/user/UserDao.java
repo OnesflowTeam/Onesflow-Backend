@@ -1,6 +1,6 @@
 package com.thenorthw.tc.common.dao.user;
 
-import com.thenorthw.blog.common.model.user.User;
+import com.thenorthw.tc.common.model.user.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

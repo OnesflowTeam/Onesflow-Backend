@@ -1,8 +1,8 @@
 package com.thenorthw.tc.web.controller.account;
 
-import com.thenorthw.blog.common.ResponseCode;
-import com.thenorthw.blog.common.ResponseModel;
-import com.thenorthw.blog.web.service.account.AccountService;
+import com.thenorthw.tc.common.ResponseCode;
+import com.thenorthw.tc.common.ResponseModel;
+import com.thenorthw.tc.web.service.account.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

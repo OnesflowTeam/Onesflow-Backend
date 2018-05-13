@@ -1,7 +1,7 @@
 package com.thenorthw.tc.web.service.user;
 
-import com.thenorthw.blog.common.model.account.Account;
-import com.thenorthw.blog.common.model.user.User;
+import com.thenorthw.tc.common.model.account.Account;
+import com.thenorthw.tc.common.model.user.User;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;

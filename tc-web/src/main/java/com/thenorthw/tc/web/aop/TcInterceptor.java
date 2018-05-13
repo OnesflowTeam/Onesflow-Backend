@@ -36,7 +36,7 @@ public class TcInterceptor {
     @Autowired
     HttpServletResponse httpServletResponse;
 
-    @Around("execution(* com.thenorthw.blog.web.controller..*(..)) && args(..,bindingResult))")
+    @Around("execution(* com.thenorthw.tc.web.controller..*(..)) && args(..,bindingResult))")
     public Object doAround(ProceedingJoinPoint pjp, BindingResult bindingResult) throws Throwable {
         Object retVal;
         ResponseModel responseModel = new ResponseModel();
@@ -68,7 +68,7 @@ public class TcInterceptor {
         return retVal;
     }
 
-    @Around("execution(* com.thenorthw.blog.web.controller..*(..)) && args()")
+    @Around("execution(* com.thenorthw.tc.web.controller..*(..)) && args()")
     public Object doAround1(ProceedingJoinPoint pjp) throws Throwable {
         Object retVal;
         ResponseModel responseModel = new ResponseModel();

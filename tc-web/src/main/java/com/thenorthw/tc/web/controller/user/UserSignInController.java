@@ -1,14 +1,14 @@
 package com.thenorthw.tc.web.controller.user;
 
-import com.thenorthw.blog.common.ResponseCode;
-import com.thenorthw.blog.common.ResponseModel;
-import com.thenorthw.blog.common.annotation.LoginNeed;
-import com.thenorthw.blog.common.model.account.Account;
-import com.thenorthw.blog.common.model.user.User;
-import com.thenorthw.blog.common.utils.JwtUtil;
-import com.thenorthw.blog.face.form.user.UserLoginForm;
-import com.thenorthw.blog.web.service.account.AccountService;
-import com.thenorthw.blog.web.service.user.UserService;
+import com.thenorthw.tc.common.ResponseCode;
+import com.thenorthw.tc.common.ResponseModel;
+import com.thenorthw.tc.common.annotation.LoginNeed;
+import com.thenorthw.tc.common.model.account.Account;
+import com.thenorthw.tc.common.model.user.User;
+import com.thenorthw.tc.common.utils.JwtUtil;
+import com.thenorthw.tc.face.form.user.UserLoginForm;
+import com.thenorthw.tc.web.service.account.AccountService;
+import com.thenorthw.tc.web.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

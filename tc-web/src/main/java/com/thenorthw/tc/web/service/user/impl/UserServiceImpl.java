@@ -1,12 +1,12 @@
 package com.thenorthw.tc.web.service.user.impl;
 
-import com.thenorthw.blog.common.dao.user.UserDao;
-import com.thenorthw.blog.common.enums.RoleType;
-import com.thenorthw.blog.common.model.account.Account;
-import com.thenorthw.blog.common.model.user.User;
-import com.thenorthw.blog.common.utils.encrypt.Encrypt;
-import com.thenorthw.blog.web.service.account.AccountService;
-import com.thenorthw.blog.web.service.user.UserService;
+import com.thenorthw.tc.common.dao.user.UserDao;
+import com.thenorthw.tc.common.enums.RoleType;
+import com.thenorthw.tc.common.model.account.Account;
+import com.thenorthw.tc.common.model.user.User;
+import com.thenorthw.tc.common.utils.encrypt.Encrypt;
+import com.thenorthw.tc.web.service.account.AccountService;
+import com.thenorthw.tc.web.service.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
         account.setLastLoginTime(new Date(System.currentTimeMillis()));
         accountService.updateLoginTime(account);
 
-		//获取用户信息
+        //获取用户信息
         User user = userDao.getUserProfileByUserId(account.getId());
 
         if(account.getRoleId() == RoleType.ROOT.roleId){

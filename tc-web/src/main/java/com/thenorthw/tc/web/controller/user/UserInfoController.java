@@ -1,13 +1,13 @@
 package com.thenorthw.tc.web.controller.user;
 
-import com.thenorthw.blog.common.ResponseCode;
-import com.thenorthw.blog.common.ResponseModel;
-import com.thenorthw.blog.common.annotation.LoginNeed;
-import com.thenorthw.blog.common.model.user.User;
-import com.thenorthw.blog.common.utils.JwtUtil;
-import com.thenorthw.blog.face.form.user.UserInfoUpdateForm;
-import com.thenorthw.blog.face.form.user.UserInfosFetchForm;
-import com.thenorthw.blog.web.service.user.UserService;
+import com.thenorthw.tc.common.ResponseCode;
+import com.thenorthw.tc.common.ResponseModel;
+import com.thenorthw.tc.common.annotation.LoginNeed;
+import com.thenorthw.tc.common.model.user.User;
+import com.thenorthw.tc.common.utils.JwtUtil;
+import com.thenorthw.tc.face.form.user.UserInfoUpdateForm;
+import com.thenorthw.tc.face.form.user.UserInfosFetchForm;
+import com.thenorthw.tc.web.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  * Created by theNorthW on 07/05/2017.
- * blog: thenorthw.com
+ * tc: thenorthw.com
  *
  * @autuor : theNorthW
  */
