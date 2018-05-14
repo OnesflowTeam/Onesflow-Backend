@@ -81,6 +81,23 @@
 
 -- 账号和user就是通过userId来关联的
 
+-- ------------------------------------------------------------------------  邮件发送部分  ----------------------------------------------------------------------------
+
+--
+-- 邮件发送记录表
+--
+CREATE TABLE `mail_record` (
+  `id`             BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `to_user`        BIGINT UNSIGNED NOT NULL ,
+  `type`           INT(1)     NOT NULL,
+  `content`        VARCHAR(1024) NOT NULL,
+  `gmt_create`     DATETIME        NOT NULL,
+  `gmt_modified`   DATETIME        NOT NULL,
+  PRIMARY KEY (`id`)
+)
+  DEFAULT CHARACTER SET = utf8;
+
+
 -- ------------------------------------------------------------------------  用户信息部分  ----------------------------------------------------------------------------
 
 --
@@ -92,12 +109,12 @@ CREATE TABLE `user` (
   `password`       VARCHAR(128)    NOT NULL,
   `phone`          VARCHAR(20)              DEFAULT NULL,
   `role_id`        BIGINT UNSIGNED NOT NULL,
-  `email`          VARCHAR(64)     NOT NULL,
   `nick`           VARCHAR(36)     NOT NULL DEFAULT 'NickNick',
   `sex`            TINYINT(1)      NOT NULL DEFAULT 1, -- 1表示男 , 2表示女 , 3表示未声明
   `introduction`   VARCHAR(188)    NOT NULL DEFAULT 'Here is introduction.',
-  `avatar`         VARCHAR(64)     NOT NULL DEFAULT '/avatar/default',
-  `background_img` VARCHAR(64)     NOT NULL DEFAULT '/bkimg/default',
+  `avatar`         VARCHAR(64)              DEFAULT '/avatar/default',
+  `background_img` VARCHAR(64)              DEFAULT '/bkimg/default',
+  `gmt_activate`   DATETIME                 DEFAULT NULL,
   `gmt_create`     DATETIME        NOT NULL,
   `gmt_modified`   DATETIME        NOT NULL,
   PRIMARY KEY (`id`)

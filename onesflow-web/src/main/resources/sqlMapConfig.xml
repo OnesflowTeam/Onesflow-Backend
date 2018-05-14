@@ -21,38 +21,16 @@
     <!-- 别名设置 -->
     <!--由于java命名规范和数据库命名规范不一致，所以需要在每个mapper.xml中写上ResultMap-->
     <typeAliases>
-        <typeAlias alias="Account" type="com.thenorthw.onesflow.common.model.account.Account"/>
 
         <typeAlias alias="User" type="com.thenorthw.onesflow.common.model.user.User"/>
-
-        <typeAlias alias="Group" type="com.thenorthw.onesflow.common.model.group.Group"/>
-        <typeAlias alias="Article" type="com.thenorthw.onesflow.common.model.article.Article"/>
-        <typeAlias alias="ArticleContent" type="com.thenorthw.onesflow.common.model.article.ArticleContent"/>
-
-        <typeAlias alias="Group" type="com.thenorthw.onesflow.common.model.group.Group"/>
-        <typeAlias alias="RArticleGroup" type="com.thenorthw.onesflow.common.model.group.RArticleGroup"/>
-
-        <typeAlias alias="Tag" type="com.thenorthw.onesflow.common.model.tag.Tag"/>
-        <typeAlias alias="RArticleTag" type="com.thenorthw.onesflow.common.model.tag.RArticleTag"/>
-
-        <typeAlias alias="Notification" type="com.thenorthw.onesflow.common.model.notification.Notification"/>
-
+        <typeAlias alias="MailRecord" type="com.thenorthw.onesflow.common.model.mail.MailRecord"/>
 
     </typeAliases>
 
     <!-- 指定映射器路径 -->
     <mappers>
-        <mapper resource="sqlMapper/account/account.xml"/>
         <mapper resource="sqlMapper/user/user.xml"/>
-
-        <mapper resource="sqlMapper/group/group.xml"/>
-        <mapper resource="sqlMapper/group/rarticlegroup.xml"/>
-
-
-        <mapper resource="sqlMapper/article/article.xml"/>
-        <mapper resource="sqlMapper/article/articlecontent.xml"/>
-
-        <!--<mapper resource="sqlMapper/notification/notification.xml"/>-->
+        <mapper resource="sqlMapper/mail/mail.xml"/>
     </mappers>
 
 

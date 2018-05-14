@@ -1,6 +1,6 @@
 package com.thenorthw.onesflow.web.filter;
 
-import com.thenorthw.onesflow.common.constants.TcConstant;
+import com.thenorthw.onesflow.common.constants.OnesflowConstant;
 import com.thenorthw.onesflow.common.utils.ShortUUIDUtil;
 import org.slf4j.MDC;
 
@@ -24,18 +24,18 @@ public class MDCFilter implements Filter {
             HttpServletRequest request = (HttpServletRequest) servletRequest;
             String requestId = ShortUUIDUtil.generateRequestId();
             HttpServletResponse response = (HttpServletResponse) servletResponse;
-            response.addHeader(TcConstant.HTTP_REQUEST_ID_HEADER, requestId);
+            response.addHeader(OnesflowConstant.HTTP_REQUEST_ID_HEADER, requestId);
             response.addHeader("Access-Control-Expose-Headers","x-token");
 
             //将requestId 放到MDC中, 供日志打印
-            MDC.put(TcConstant.HTTP_REQUEST_ID_HEADER, requestId);
+            MDC.put(OnesflowConstant.HTTP_REQUEST_ID_HEADER, requestId);
             String requestUrl = request.getRequestURI().toString();
-            MDC.put(TcConstant.HTTP_REQUEST_URL_HEADER, requestUrl);
+            MDC.put(OnesflowConstant.HTTP_REQUEST_URL_HEADER, requestUrl);
 
             filterChain.doFilter(request, servletResponse);
         } finally {
-            MDC.remove(TcConstant.HTTP_REQUEST_ID_HEADER);
-            MDC.remove(TcConstant.HTTP_REQUEST_URL_HEADER);
+            MDC.remove(OnesflowConstant.HTTP_REQUEST_ID_HEADER);
+            MDC.remove(OnesflowConstant.HTTP_REQUEST_URL_HEADER);
         }
     }
 

@@ -6,12 +6,12 @@ package com.thenorthw.onesflow.common.exception;
  *
  * @autuor : theNorthW
  */
-public enum TcError {
+public enum OnesflowError {
     LoginError("000001","login error",""),
 
     RequestParamError("100001","request param error","");
 
-    TcError(String code, String msg, String solution){
+    OnesflowError(String code, String msg, String solution){
         this.code = code;
         this.message = msg;
         this.solution = solution;

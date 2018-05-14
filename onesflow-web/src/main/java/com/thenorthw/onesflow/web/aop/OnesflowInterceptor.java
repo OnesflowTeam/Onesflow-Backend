@@ -28,7 +28,7 @@ import java.util.Map;
  */
 @Component
 @Aspect
-public class TcInterceptor {
+public class OnesflowInterceptor {
     private static Logger logger = LoggerFactory.getLogger("httpValidLogger");
 
     @Autowired
@@ -45,7 +45,7 @@ public class TcInterceptor {
         LoginNeed loginNeed = ((MethodSignature) pjp.getSignature()).getMethod().getAnnotation(LoginNeed.class);
         if(loginNeed != null){
             Map<String,Claim> uidc = JwtUtil.verify(httpServletRequest.getHeader("x-token"));
-            String uid = uidc == null ? null : uidc.get("u").asString();
+            Long uid = JwtUtil.getUidFromClaims(uidc);
             if (uid == null){
                 responseModel.setResponseCode(ResponseCode.UNAUTHORIZED.getCode());
                 responseModel.setMessage(ResponseCode.UNAUTHORIZED.getMessage());
@@ -77,7 +77,7 @@ public class TcInterceptor {
         LoginNeed loginNeed = ((MethodSignature) pjp.getSignature()).getMethod().getAnnotation(LoginNeed.class);
         if(loginNeed != null){
             Map<String,Claim> uidc = JwtUtil.verify(httpServletRequest.getHeader("x-token"));
-            String uid = uidc == null ? null : uidc.get("u").asString();
+            Long uid = JwtUtil.getUidFromClaims(uidc);
             if (uid == null){
                 responseModel.setResponseCode(ResponseCode.UNAUTHORIZED.getCode());
                 responseModel.setMessage(ResponseCode.UNAUTHORIZED.getMessage());

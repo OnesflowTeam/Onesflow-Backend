@@ -2,79 +2,122 @@
         <!DOCTYPE mapper
                 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--CREATE TABLE `user` (
+  `id`             BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `loginname`      VARCHAR(64)     NOT NULL,
+  `password`       VARCHAR(128)    NOT NULL,
+  `phone`          VARCHAR(38)              DEFAULT NULL,
+  `role_id`        BIGINT UNSIGNED NOT NULL,
+  `email`          VARCHAR(64)     NOT NULL,
+  `nick`           VARCHAR(36)     NOT NULL DEFAULT 'NickNick',
+  `sex`            TINYINT(1)      NOT NULL DEFAULT 1, - 1表示男 , 2表示女 , 3表示未声明
+  `introduction`   VARCHAR(188)    NOT NULL DEFAULT 'Here is introduction.',
+  `avatar`         VARCHAR(64)     NOT NULL DEFAULT '/avatar/default',
+  `background_img` VARCHAR(64)     NOT NULL DEFAULT '/bkimg/default',
+  `gmt_create`     DATETIME        NOT NULL,
+  `gmt_modified`   DATETIME        NOT NULL,
+  PRIMARY KEY (`id`)
+)
+  DEFAULT CHARACTER SET = utf8;-->
 <mapper namespace="com.thenorthw.onesflow.common.dao.user.UserDao">
     <resultMap id="UserMaps" type="User">
         <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="loginname" column="loginname" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="roleId" column="role_id" jdbcType="BIGINT"/>
         <result property="nick" column="nick" jdbcType="VARCHAR"/>
         <result property="sex" column="sex" jdbcType="INTEGER"/>
         <result property="introduction" column="introduction" jdbcType="VARCHAR"/>
         <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
         <result property="backgroundImg" column="background_img" jdbcType="VARCHAR"/>
+        <result property="gmtActivate" column="gmt_activate" jdbcType="TIMESTAMP"/>
         <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
         <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
     </resultMap>
+
     <sql id="fullColumns">
         `id`,
+        `loginname`,
+        `password`,
+        `phone`,
+        `role_id`,
         `nick`,
         `sex`,
         `introduction`,
         `avatar`,
-        `background_img`
+        `background_img`,
+        `gmt_activate`,
         `gmt_create`,
         `gmt_modified`
     </sql>
-    <insert id="insertNewUser" parameterType="User">
-      INSERT INTO user(
+
+    <sql id="infoColumns">
         `id`,
+        `role_id`,
         `nick`,
         `sex`,
         `introduction`,
         `avatar`,
         `background_img`,
         `gmt_create`,
+        `gmt_modified`
+    </sql>
+    <insert id="registerNewUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+      INSERT INTO user(
+        `id`,
+        `loginname`,
+        `password`,
+        `phone`,
+        `role_id`,
+        `nick`,
+        `sex`,
+        `introduction`,
+        `avatar`,
+        `background_img`,
+        `gmt_activate`,
+        `gmt_create`,
         `gmt_modified`)
-      VALUES (#{id},#{nick},#{sex},#{introduction},#{avatar},#{backgroundImg},#{gmtCreate},#{gmtModified})
+      VALUES (#{id},#{loginname},#{password},#{phone},#{roleId},#{nick},#{sex},#{introduction},#{avatar},#{backgroundImg},#{gmtActivate},#{gmtCreate},#{gmtModified})
     </insert>
 
-    <!--获得信息-->
-    <!--<select id="getUserByLoginname" parameterType="string" resultType="User">-->
-      <!--select * from user_profile where loginname=#{loginname}-->
-    <!--</select>-->
-    <select id="getUserProfileByUserId" parameterType="long" resultType="User">
-        SELECT
-        <include refid="fullColumns"/>
-        FROM user WHERE id=#{id}
+    <select id="getUserProfileByLoginName" parameterType="string" resultMap="UserMaps">
+      select <include refid="fullColumns"/> from user where loginname=#{loginname}
     </select>
-
-    <select id="getUserProfileByUserIds" resultMap="UserMaps">
-        SELECT
-        `id`,
-        `nick`,
-        `avatar`
-        FROM user WHERE id IN
-        <foreach collection="userIds" item="id" open="(" close=")"
-                 separator=",">
-            #{id}
-        </foreach>
-    </select>
-    <!--<select id="getUserByNick" parameterType="string" resultType="User">-->
-        <!--select * from user_profile where nick=#{nick}-->
+    <!--<select id="getUserProfileByUserId" parameterType="long" resultType="User">-->
+        <!--SELECT-->
+        <!--<include refid="infoColumns"/>-->
+        <!--FROM user WHERE id=#{id}-->
     <!--</select>-->
 
-    <!--更新信息-->
-    <!--<update id="activateUser" parameterType="User">-->
-      <!--UPDATE users SET activated_time = #{activated_time} WHERE loginname = #{loginanme};-->
+    <!--<select id="getUserProfileByUserIds" resultMap="UserMaps">-->
+        <!--SELECT-->
+        <!--<include refid="infoColumns"/>-->
+        <!--FROM user WHERE id IN-->
+        <!--<foreach collection="userIds" item="id" open="(" close=")"-->
+                 <!--separator=",">-->
+            <!--#{id}-->
+        <!--</foreach>-->
+    <!--</select>-->
+    <!--&lt;!&ndash;<select id="getUserByNick" parameterType="string" resultType="User">&ndash;&gt;-->
+        <!--&lt;!&ndash;select * from user_profile where nick=#{nick}&ndash;&gt;-->
+    <!--&lt;!&ndash;</select>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;更新信息&ndash;&gt;-->
+    <!--&lt;!&ndash;<update id="activateUser" parameterType="User">&ndash;&gt;-->
+      <!--&lt;!&ndash;UPDATE users SET activated_time = #{activated_time} WHERE loginname = #{loginanme};&ndash;&gt;-->
+    <!--&lt;!&ndash;</update>&ndash;&gt;-->
+    <!--<update id="updateUserProfile" parameterType="User">-->
+        <!--UPDATE user-->
+        <!--SET  nick = #{nick} , sex = #{sex} , introduction = #{introduction}, gmt_modified = #{gmtModified}-->
+        <!--WHERE id = #{id}-->
     <!--</update>-->
-    <update id="updateUserProfile" parameterType="User">
-        UPDATE user
-        SET  nick = #{nick} , sex = #{sex} , introduction = #{introduction}, gmt_modified = #{gmtModified}
-        WHERE id = #{id}
-    </update>
 
-    <update id="updateUserAvatar">
+    <update id="activateUser">
         UPDATE user
-        SET avatar=#{avatar}
-        WHERE id = #{creator}
+        SET gmt_activate = #{gmtActivate}
+        WHERE id = #{id}
     </update>
 
 </mapper>

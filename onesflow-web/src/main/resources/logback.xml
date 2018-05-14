@@ -35,8 +35,18 @@
 		</encoder>
 	</appender>
 
+	<appender name="mailinfo" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<Encoding>UTF-8</Encoding>
+		<file>${logDir}/onesflow-mailinfo.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${logDir}/onesflow-mailinfo_%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>90</maxHistory>
+		</rollingPolicy>
 
-
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{0} - [%X{x-request-id}] %msg%n</pattern>
+		</encoder>
+	</appender>
 
 
 	<root level="${logLevel:-INFO}">
@@ -46,5 +56,9 @@
 
 	<logger name="httpValidLogger" level="INFO" additivity="false">
 		<appender-ref ref="httpvalid" />
+	</logger>
+
+	<logger name="mailInfoLogger" level="INFO" additivity="false">
+		<appender-ref ref="mailinfo" />
 	</logger>
 </configuration>

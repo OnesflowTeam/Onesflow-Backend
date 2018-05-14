@@ -2,7 +2,7 @@ package com.thenorthw.onesflow.web.filter;
 
 import com.thenorthw.onesflow.common.ResponseCode;
 import com.thenorthw.onesflow.common.ResponseModel;
-import com.thenorthw.onesflow.common.exception.TcException;
+import com.thenorthw.onesflow.common.exception.OnesflowException;
 import com.thenorthw.onesflow.common.utils.json.JsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +29,7 @@ public class ExceptionCatchFilter implements Filter{
         try{
             filterChain.doFilter(servletRequest,servletResponse);
         }catch (Throwable t){
-            if(t instanceof TcException) {
+            if(t instanceof OnesflowException) {
                 logger.error("exception happen, please locate the error and fix it.\n exception: {}", t);
                 ResponseModel<String> res = new ResponseModel<String>();
                 res.setResponseCode(ResponseCode.INTERNAL_SERVER_ERROR.getCode());

@@ -1,9 +1,7 @@
 package com.thenorthw.onesflow.web.service.user;
 
 import com.thenorthw.onesflow.common.model.user.User;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
 
 /**
  * Created by theNorthW on 03/05/2017.
@@ -13,17 +11,13 @@ import java.util.List;
  */
 public interface UserService {
 
-    public User isUserHasRegisterWeChat(String openId);
+    public int register(User user);
 
-//    public User userLogin(Account account);
+    public int activateUser(Long id);
 
-    public int createNewUser(User user);
 
-    public User getUserProfileByUserId(Long userId);
+    //get info
+    public User getUserByLoginName(String loginname);
 
-    public int updateUserInfo(User user);
 
-    public int updateUserAvatar(byte[] avatarBytes, Long userId);
-
-    List<User> getUserProfileByUserIds(@RequestParam("userIds") String[] userIds);
 }

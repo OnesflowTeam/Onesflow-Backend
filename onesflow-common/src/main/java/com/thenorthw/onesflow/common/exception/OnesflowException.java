@@ -6,10 +6,10 @@ package com.thenorthw.onesflow.common.exception;
  *
  * @autuor : theNorthW
  */
-public class TcException extends RuntimeException{
-    public TcError error;
+public class OnesflowException extends RuntimeException{
+    public OnesflowError error;
 
-    public TcException(TcError error){
+    public OnesflowException(OnesflowError error){
         this.error = error;
     }
 

@@ -10,21 +10,56 @@ import java.util.Date;
  */
 public class User {
     Long id;
+    String loginname;
+    String password;
+    String phone;
+    Long roleId;
     String nick;
     Integer sex;
     String introduction;
     String avatar;
     String backgroundImg;
+    Date gmtActivate;
     Date gmtCreate;
     Date gmtModified;
-    Boolean isAdmin;
 
-    public Boolean getAdmin() {
-        return isAdmin;
+    public Date getGmtActivate() {
+        return gmtActivate;
     }
 
-    public void setAdmin(Boolean admin) {
-        isAdmin = admin;
+    public void setGmtActivate(Date gmtActivate) {
+        this.gmtActivate = gmtActivate;
+    }
+    public String getLoginname() {
+        return loginname;
+    }
+
+    public void setLoginname(String loginname) {
+        this.loginname = loginname;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 
     public Long getId() {

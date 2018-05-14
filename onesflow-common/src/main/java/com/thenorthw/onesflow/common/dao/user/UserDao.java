@@ -4,6 +4,7 @@ import com.thenorthw.onesflow.common.model.user.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,13 +15,19 @@ import java.util.List;
  */
 @Repository
 public interface UserDao {
-    public int insertNewUser(User user);
+    public int registerNewUser(User user);
 
-    public User getUserProfileByUserId(long userId);
+    public User getUserProfileByLoginName(String loginname);
 
-    public List<User> getUserProfileByUserIds(@Param("userIds") List<String> userIds);
+    //activate
+    public int activateUser(@Param("id") Long id, @Param("gmtActivate") Date time);
 
-    public int updateUserProfile(User user);
-
-    public int updateUserAvatar(@Param("userId") long userId, @Param("avatar") String avatar);
+//
+//    public User getUserProfileByUserId(long userId);
+//
+//    public List<User> getUserProfileByUserIds(@Param("userIds") List<String> userIds);
+//
+//    public int updateUserProfile(User user);
+//
+//    public int updateUserAvatar(@Param("userId") long userId, @Param("avatar") String avatar);
 }

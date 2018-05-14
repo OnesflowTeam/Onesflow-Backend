@@ -54,6 +54,6 @@
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
   <listener>
-    <listener-class>com.thenorthw.onesflow.web.listener.TcListener</listener-class>
+    <listener-class>com.thenorthw.onesflow.web.listener.OnesflowListener</listener-class>
   </listener>
 </web-app>

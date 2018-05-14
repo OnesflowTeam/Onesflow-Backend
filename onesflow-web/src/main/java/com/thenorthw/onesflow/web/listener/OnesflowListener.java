@@ -15,17 +15,17 @@ import javax.servlet.ServletContextListener;
  *
  * @autuor : theNorthW
  */
-public class TcListener implements ServletContextListener{
-    private static Logger logger = LoggerFactory.getLogger(TcListener.class);
+public class OnesflowListener implements ServletContextListener{
+    private static Logger logger = LoggerFactory.getLogger(OnesflowListener.class);
 
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         long startTime  = System.currentTimeMillis();
-        logger.info("myblog service  context initialize begin {}",startTime);
+        logger.info("onesflow service  context initialize begin {}",startTime);
 
         WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(servletContextEvent.getServletContext());
         TcContext.setYummyContext(ctx);
 
-        logger.info("myblog service  context initialize success, cost time {}",System.currentTimeMillis() - startTime);
+        logger.info("onesflow service  context initialize success, cost time {}",System.currentTimeMillis() - startTime);
     }
 
     public void contextDestroyed(ServletContextEvent servletContextEvent) {

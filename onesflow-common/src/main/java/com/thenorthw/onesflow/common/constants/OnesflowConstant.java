@@ -22,7 +22,7 @@ package com.thenorthw.onesflow.common.constants;
  *
  * @author LeeAutumn
  */
-public class TcConstant {
+public class OnesflowConstant {
     //http header
     public static String TOKEN_HEADER                 =       "X-token";
 
@@ -36,5 +36,6 @@ public class TcConstant {
 
     //jwt
     public static String ACCOUNT_ID                   =         "accountId";
+    public static String USER_ID_IN_JWT =         "u";
 
 }
