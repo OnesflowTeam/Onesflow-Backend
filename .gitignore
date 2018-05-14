@@ -5,6 +5,6 @@ test/
 target/
 devenv/
 release/
-blog-release/
+onesflow-release/
 logic/
 develop.log
