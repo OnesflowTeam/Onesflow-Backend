@@ -5,18 +5,18 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.thenorthw</groupId>
-  <artifactId>tc-all</artifactId>
+  <artifactId>onesflow-all</artifactId>
   <packaging>pom</packaging>
   <version>1.0.0</version>
   <modules>
-    <module>tc-common</module>
-    <module>tc-face</module>
-    <module>tc-web</module>
+    <module>onesflow-common</module>
+    <module>onesflow-face</module>
+    <module>onesflow-web</module>
   </modules>
 
-  <name>tc-all</name>
+  <name>onesflow-all</name>
   <!-- FIXME change it to the project's website -->
-  <url>http://www.teamcoding.net</url>
+  <url>http://www.onesflow.com</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -231,7 +231,7 @@
         <artifactId>maven-assembly-plugin</artifactId>
         <version>2.6</version>
         <configuration>
-          <finalName>blog</finalName>
+          <finalName>onesflow</finalName>
           <descriptors>
             <descriptor>release-webapp.xml</descriptor>
           </descriptors>

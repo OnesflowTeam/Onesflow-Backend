@@ -7,9 +7,9 @@
 SCRIPT_NAME=$0;
 BIN_DIR=`dirname ${SCRIPT_NAME}`;
 MS_HOME=$(cd ${BIN_DIR}/..; pwd);
-MAIN_CLASS="com.thenorthw.tc.web.Main"
+MAIN_CLASS="com.thenorthw.onesflow.web.Main"
 
-PID_FILE="${MS_HOME}/.tcserver.pid"
+PID_FILE="${MS_HOME}/.ofserver.pid"
 
 function is_alive()
 {
@@ -54,7 +54,7 @@ iter=0
 while [[ $iter -lt 3 ]]; do
     stop
     if [ $? == 0 ] ; then
-        echo "TeamCoding Server Process Stopped.";
+        echo "OnesFlow Server Process Stopped.";
         rm -rf $PID_FILE;
         exit 0;
     fi

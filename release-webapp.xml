@@ -18,7 +18,7 @@
 
 <assembly>
     <id>web</id>
-    <baseDirectory>tc-web</baseDirectory>
+    <baseDirectory>onesflow-web</baseDirectory>
     <formats>
         <format>dir</format>
         <format>tar.gz</format>
@@ -30,7 +30,7 @@
             </includes>
         </fileSet>
         <fileSet>
-            <directory>tc-web/src/main/resources</directory>
+            <directory>onesflow-web/src/main/resources</directory>
             <outputDirectory>.</outputDirectory>
         </fileSet>
         <fileSet>
@@ -38,7 +38,7 @@
             <outputDirectory>bin/</outputDirectory>
         </fileSet>
         <fileSet>
-            <directory>tc-web/src/main/webapp</directory>
+            <directory>onesflow-web/src/main/webapp</directory>
             <outputDirectory>webapp/</outputDirectory>
         </fileSet>
     </fileSets>
@@ -47,7 +47,7 @@
     <moduleSets>
         <moduleSet>
             <includes>
-                <include>com.thenorthw:tc-web</include>
+                <include>com.thenorthw:onesflow-web</include>
             </includes>
             <binaries>
                 <outputDirectory>.</outputDirectory>

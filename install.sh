@@ -17,7 +17,7 @@
 # git pull
 
 rm -rf target
-rm -rf blog-release
+rm -rf onesflow-release
 
 PWD=$(pwd)
 
@@ -27,6 +27,6 @@ else
     mvn -Dmaven.test.skip=true clean package install assembly:assembly -U
 
 #   setup the servicesrv moudle
-    ln -s target/tc-web/tc-web tc-release
+    ln -s target/onesflow-web/onesflow-web onesflow-release
 
 fi

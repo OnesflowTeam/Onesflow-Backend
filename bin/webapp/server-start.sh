@@ -9,16 +9,16 @@ MS_VERSION='1.0.0'
 SCRIPT_NAME=$0;
 BIN_DIR=`dirname ${SCRIPT_NAME}`;
 MS_HOME=$(cd ${BIN_DIR}/..; pwd);
-MAIN_CLASS="com.thenorthw.tc.web.Main"
-CLASSPATH=".:${BIN_DIR}:${MS_HOME}/lib/*:${MS_HOME}/tc-web-${MS_VERSION}.jar"
+MAIN_CLASS="com.thenorthw.onesflow.web.Main"
+CLASSPATH=".:${BIN_DIR}:${MS_HOME}/lib/*:${MS_HOME}/onesflow-web-${MS_VERSION}.jar"
 
-PID_FILE="${MS_HOME}/.tcserver.pid"
+PID_FILE="${MS_HOME}/.ofserver.pid"
 
 START_COMMAND="java -classpath ${CLASSPATH}  ${MAIN_CLASS}"
 
 function printCopyright()
 {
-    copyrightInfo="TeamCoding Server ${MS_VERSION}, From theNorthW.com! \n"
+    copyrightInfo="OnesFlow Server ${MS_VERSION}, From theNorthW.com! \n"
     echo -e ${copyrightInfo}
 }
 
@@ -57,16 +57,16 @@ function after_start()
     pids=`ps aux | grep "${MAIN_CLASS}" | grep java | grep -v grep | awk '{print $2}'`;
     num=${#pids[@]}
     if [ ${num} -le 0 ]; then
-        echo "TeamCoding Server Starts Failed!"
+        echo "OnesFlow Server Starts Failed!"
         exit 1
     elif [ ${num} -eq 1 ]; then
         ps_pid=${pids[0]}
         if [ "${new_pid}" == "${ps_pid}" ]; then
-            echo "TeamCoding Server Starts Success! Pid[${new_pid}]"
+            echo "OnesFlow Server Starts Success! Pid[${new_pid}]"
             exit 0
         else
             echo "some error, start pid[${new_pid}], but running pid[${ps_pid}]"
-            echo "TeamCoding Server Starts Failed!"
+            echo "OnesFlow Server Starts Failed!"
             exit 1
         fi
     else
@@ -79,7 +79,7 @@ function after_start()
             fi
         done
         echo "There are more than 1 running process[${pid_str}], please check!"
-        echo "TeamCoding Server Starts Failed!"
+        echo "OnesFlow Server Starts Failed!"
         exit 1
     fi
 }
@@ -111,11 +111,11 @@ done
 
 if [ -z ${JAVA_HOME} ]; then
     echo "can not getFile JAVA_HOME, please set it first. jdk1.7 is recommended!"
-    echo "TeamCoding Server Starts Failed!"
+    echo "OnesFlow Server Starts Failed!"
     exit 1
 elif [ ! -d ${JAVA_HOME} ]; then
     echo "can not getFile JAVA_HOME[${JAVA_HOME}]"
-    echo "TeamCoding Server Starts Failed!"
+    echo "OnesFlow Server Starts Failed!"
     exit 1
 else
     echo "getFile JAVA_HOME: "${JAVA_HOME}
@@ -130,7 +130,7 @@ echo "START_COMMAND: "${START_COMMAND}
 cd ..
 nohup ${START_COMMAND} >./nohup.out 2>&1 &
 if [ $? -ne 0 ]; then
-    echo "TeamCoding Server Starts Failed!"
+    echo "OnesFlow Server Starts Failed!"
     exit 1
 fi
 
