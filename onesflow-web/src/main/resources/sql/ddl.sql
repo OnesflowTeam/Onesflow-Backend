@@ -121,6 +121,20 @@ CREATE TABLE `user` (
 )
   DEFAULT CHARACTER SET = utf8;
 
+
+--
+-- 用户基本信息表
+--
+CREATE TABLE `login_record` (
+  `id`             BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `uid`      BIGINT UNSIGNED     NOT NULL,
+  `ip`       VARCHAR(32)    NOT NULL,
+  `gmt_create`     DATETIME        NOT NULL,
+  `gmt_modified`   DATETIME        NOT NULL,
+  PRIMARY KEY (`id`)
+)
+  DEFAULT CHARACTER SET = utf8;
+
 -- --------------------------------------------------------------------------  Team部分  ----------------------------------------------------------------------------
 
 
