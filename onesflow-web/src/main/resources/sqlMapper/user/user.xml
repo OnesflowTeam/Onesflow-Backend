@@ -144,6 +144,18 @@
         <!--WHERE id = #{id}-->
     <!--</update>-->
 
+    <update id="updateUserInfo" parameterType="User">
+        UPDATE user
+        SET sex = #{sex} , introduction = #{introduction} , nick = #{nick} ,gmt_modified = now()
+        WHERE id = #{id}
+    </update>
+
+    <update id="changePassword">
+        UPDATE user
+        SET password = #{newpass} ,gmt_modified = now()
+        WHERE id = #{id} AND password = #{oldpass}
+    </update>
+
     <update id="activateUser">
         UPDATE user
         SET gmt_activate = #{gmtActivate}

@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
  * onesflow: thenorthw.com
  */
 public class UserInfoUpdateForm {
-	@Size(max = 18)
+	@Size(max = 36)
 	@NotNull
 	String nick;
 
@@ -18,7 +18,7 @@ public class UserInfoUpdateForm {
 	@NotNull
 	String sex;
 
-	@Size(max = 218)
+	@Size(max = 188)
 	@NotNull
 	String introduction;
 

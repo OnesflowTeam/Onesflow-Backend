@@ -24,6 +24,12 @@ public interface UserService {
     public User getUserByLoginName(String loginname);
     //用户自己获取自己信息
     public User getDetailedUserInfoByUid(Long uid);
+    //update
+    public int updateUserInfo(User user);
+
+
+    //password
+    public int changePassword(Long id, String oldpass, String newpass);
 
 
 

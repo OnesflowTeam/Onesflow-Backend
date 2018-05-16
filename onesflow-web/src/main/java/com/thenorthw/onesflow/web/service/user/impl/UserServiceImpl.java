@@ -56,8 +56,6 @@ public class UserServiceImpl implements UserService{
         }
     }
 
-
-
     @Override
     public int activateUser(Long id) {
         return userDao.activateUser(id,new Date());
@@ -114,6 +112,16 @@ public class UserServiceImpl implements UserService{
     @Override
     public User getDetailedUserInfoByUid(Long uid) {
         return userDao.getDetailedUserInfoByUid(uid);
+    }
+
+    @Override
+    public int updateUserInfo(User user) {
+        return userDao.updateUserInfo(user);
+    }
+
+    @Override
+    public int changePassword(Long id, String oldpass, String newpass) {
+        return userDao.changePassword(id,oldpass,newpass);
     }
 
     @Override

@@ -29,15 +29,18 @@ public enum ResponseCode {
     ACTIVATE_MAIL_SEND_FAIL(1002,"Send activate mail fail"),
     ACTIVATE_MAIL_SEND_TOO_FREQUENTLY(1004,"Send activate mail too frequently"),
     NO_SUCH_USER(1003,"no such user"),
-    ALREADY_ACTIVATED(1004,"Already activated."),
+    ALREADY_ACTIVATED(1008,"Already activated."),
 
     //login
     NO_SUCH_ACCOUNT_OR_PASSWORD_WRONG(1005,"No such account exists or wrong password"),
     LOGIN_FAIL(1006,"Login error."),
     HAVE_NOT_ACTIVATED(1007,"Have not Activate"),
 
-    //update user info
+    //update user avatar info
     OSS_UPLOAD_ERROR(1011,"upload error"),
+
+    //change password
+    WRONG_OLD_PASSWORD(1012,"Wrong old password"),
 
     //group
     NO_SUCH_PARENT_GROUP(1031,"no such parent group or group level out of 2."),

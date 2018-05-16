@@ -28,6 +28,12 @@ public interface UserDao {
     public int activateUser(@Param("id") Long id, @Param("gmtActivate") Date time);
 
 
+    //info
+    public int updateUserInfo(User user);
+
+    //password
+    public int changePassword(@Param("id")Long id,@Param("oldpass")String oldpass,@Param("newpass")String newpass);
+
 
 //
 //    public User getUserProfileByUserId(long userId);
