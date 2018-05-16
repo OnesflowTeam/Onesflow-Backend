@@ -56,7 +56,7 @@ public class LoginController {
                 responseModel.setMessage(ResponseCode.HAVE_NOT_ACTIVATED.getMessage());
             }else{
                 //在response header中放入x-token
-                httpServletResponse.addHeader("x-token", JwtUtil.createToken(user.getId().toString()));
+                httpServletResponse.addHeader("x-token", JwtUtil.createToken(user.getId().toString(),userLoginForm.getRemember().equals("1")));
                 responseModel.setData(user);
             }
         }

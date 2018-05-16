@@ -22,6 +22,18 @@ public class UserLoginForm {
 	@NotNull
 	String logintype;
 
+	@Pattern(regexp = "1|0")
+	@NotNull
+	String remember;
+
+	public String getRemember() {
+		return remember;
+	}
+
+	public void setRemember(String remember) {
+		this.remember = remember;
+	}
+
 	public String getLoginname() {
 		return loginname;
 	}

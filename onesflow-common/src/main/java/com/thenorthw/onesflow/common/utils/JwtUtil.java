@@ -44,12 +44,15 @@ public class JwtUtil {
         headerMap.put("typ","JWT");
     }
 
-    public static String createToken(String uid){
+    public static String createToken(String uid,Boolean remermber){
         Date now = new Date();
 
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.HOUR,168);
-        calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH),4,0);
+        calendar.add(Calendar.HOUR,remermber ? 168 : 2);
+        if(remermber) {
+            //凌晨失效
+            calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), 4, 0);
+        }
         Date expire = calendar.getTime();
 
         try {
