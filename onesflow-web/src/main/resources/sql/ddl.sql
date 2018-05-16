@@ -101,22 +101,22 @@ CREATE TABLE `mail_record` (
 -- ------------------------------------------------------------------------  用户信息部分  ----------------------------------------------------------------------------
 
 --
--- 用户基本信息表
+-- 用户基本信息表,用户可以自己在BlogAboutMe中填写自己的详细介绍
 --
 CREATE TABLE `user` (
-  `id`             BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `loginname`      VARCHAR(64)     NOT NULL,
-  `password`       VARCHAR(128)    NOT NULL,
-  `phone`          VARCHAR(20)              DEFAULT NULL,
-  `role_id`        BIGINT UNSIGNED NOT NULL,
-  `nick`           VARCHAR(36)     NOT NULL DEFAULT 'NickNick',
-  `sex`            TINYINT(1)      NOT NULL DEFAULT 1, -- 1表示男 , 2表示女 , 3表示未声明
-  `introduction`   VARCHAR(188)    NOT NULL DEFAULT 'Here is introduction.',
-  `avatar`         VARCHAR(64)              DEFAULT '/avatar/default',
-  `background_img` VARCHAR(64)              DEFAULT '/bkimg/default',
-  `gmt_activate`   DATETIME                 DEFAULT NULL,
-  `gmt_create`     DATETIME        NOT NULL,
-  `gmt_modified`   DATETIME        NOT NULL,
+  `id`                BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `loginname`         VARCHAR(64)     NOT NULL,
+  `password`          VARCHAR(128)    NOT NULL,
+  `phone`             VARCHAR(20)              DEFAULT NULL,
+  `role_id`           BIGINT UNSIGNED NOT NULL,
+  `nick`              VARCHAR(36)     NOT NULL DEFAULT 'NickNick',
+  `sex`               TINYINT(1)      NOT NULL DEFAULT 1, -- 1表示男 , 2表示女 , 3表示未声明
+  `introduction`      VARCHAR(188)    NOT NULL DEFAULT 'Here is introduction.',
+  `avatar`            VARCHAR(64)              DEFAULT '/avatar/default',
+  `background_img`    VARCHAR(64)              DEFAULT '/bkimg/default',
+  `gmt_activate`      DATETIME                 DEFAULT NULL,
+  `gmt_create`        DATETIME        NOT NULL,
+  `gmt_modified`      DATETIME        NOT NULL,
   PRIMARY KEY (`id`)
 )
   DEFAULT CHARACTER SET = utf8;
@@ -128,7 +128,8 @@ CREATE TABLE `user` (
 CREATE TABLE `login_record` (
   `id`             BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `uid`      BIGINT UNSIGNED     NOT NULL,
-  `ip`       VARCHAR(32)    NOT NULL,
+  `address`       VARCHAR(128)    NOT NULL,
+  `success`        TINYINT(1) NOT NULL DEFAULT 1,
   `gmt_create`     DATETIME        NOT NULL,
   `gmt_modified`   DATETIME        NOT NULL,
   PRIMARY KEY (`id`)

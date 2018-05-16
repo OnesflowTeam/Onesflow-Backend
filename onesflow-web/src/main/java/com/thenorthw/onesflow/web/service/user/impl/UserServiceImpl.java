@@ -1,19 +1,18 @@
 package com.thenorthw.onesflow.web.service.user.impl;
 
+import com.auth0.jwt.interfaces.Claim;
 import com.thenorthw.onesflow.common.dao.user.UserDao;
-import com.thenorthw.onesflow.common.enums.MailType;
-import com.thenorthw.onesflow.common.enums.RoleType;
-import com.thenorthw.onesflow.common.model.mail.MailRecord;
+import com.thenorthw.onesflow.common.model.user.LoginRecord;
 import com.thenorthw.onesflow.common.model.user.User;
 import com.thenorthw.onesflow.common.utils.JwtUtil;
-import com.thenorthw.onesflow.common.utils.ShortUUIDUtil;
-import com.thenorthw.onesflow.common.utils.mail.OnesflowMailClient;
 import com.thenorthw.onesflow.web.service.mail.MailService;
 import com.thenorthw.onesflow.web.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.Map;
 
 
 /**
@@ -24,6 +23,8 @@ import java.util.Date;
  */
 @Service
 public class UserServiceImpl implements UserService{
+    @Autowired
+    HttpServletRequest httpServletRequest;
     @Autowired
     UserDao userDao;
 
@@ -63,8 +64,56 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public User userLoginByLP(String loginname, String password) {
+        User user = userDao.getUserProfileByLoginName(loginname);
+
+
+        if(user == null){
+            return null;
+        }else if(user.getPassword().equals(password)){
+            //插入登录记录
+            insertLoginRecord(user,1);
+
+            //将这两行不对外显示
+            user.setPassword(null);
+            user.setLoginname(null);
+        }else {
+            //插入登录失败记录
+            insertLoginRecord(user,0);
+            return null;
+        }
+
+        return user;
+    }
+
+    @Override
+    public User userLoginByToken(String token) {
+        Map<String,Claim> cs = JwtUtil.verify(token);
+
+        if(token == null || cs == null){
+            insertLoginRecord(null,0);
+            return null;
+        }
+
+        if(JwtUtil.getUidFromClaims(cs) == null){
+            insertLoginRecord(null,0);
+            return null;
+        }
+
+        User user = getDetailedUserInfoByUid(JwtUtil.getUidFromClaims(cs));
+        insertLoginRecord(user,1);
+
+        return user;
+    }
+
+    @Override
     public User getUserByLoginName(String loginname) {
         return userDao.getUserProfileByLoginName(loginname);
+    }
+
+    @Override
+    public User getDetailedUserInfoByUid(Long uid) {
+        return userDao.getDetailedUserInfoByUid(uid);
     }
 
     @Override
@@ -72,4 +121,36 @@ public class UserServiceImpl implements UserService{
         //在博客模块下放入默认分类
         return 0;
     }
+
+
+    //插入登录记录
+    private void insertLoginRecord(User user,Integer success){
+        String fromSource = "X-Real-IP";
+        String ip = httpServletRequest.getHeader("X-Real-IP");
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = httpServletRequest.getHeader("X-Forwarded-For");
+            fromSource = "X-Forwarded-For";
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = httpServletRequest.getHeader("Proxy-Client-IP");
+            fromSource = "Proxy-Client-IP";
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = httpServletRequest.getHeader("WL-Proxy-Client-IP");
+            fromSource = "WL-Proxy-Client-IP";
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = httpServletRequest.getRemoteAddr();
+            fromSource = "httpServletRequest.getRemoteAddr";
+        }
+        LoginRecord loginRecord = new LoginRecord();
+        Date now = new Date();
+        loginRecord.setUid(user == null ? 4444444444444444444L : user.getId());
+        loginRecord.setAddress(ip+"|"+fromSource);
+        loginRecord.setGmtCreate(now);
+        loginRecord.setGmtModified(now);
+        loginRecord.setSuccess(success);
+        userDao.addLoginRecord(loginRecord);
+    }
+
 }

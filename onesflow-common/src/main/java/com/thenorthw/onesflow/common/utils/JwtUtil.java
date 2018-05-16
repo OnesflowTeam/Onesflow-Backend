@@ -48,14 +48,15 @@ public class JwtUtil {
         Date now = new Date();
 
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.HOUR,24);
+        calendar.add(Calendar.HOUR,168);
+        calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH),4,0);
         Date expire = calendar.getTime();
 
         try {
             String token = JWT.create()
                     .withHeader(headerMap)
                     .withIssuedAt(now)
-                    .withExpiresAt(expire)
+                    .withExpiresAt(expire) // 设置成在凌晨4点过期
                     .withClaim(OnesflowConstant.USER_ID_IN_JWT,uid)
                     .withClaim("uid",ShortUUIDUtil.randomUUID())
                     .sign(Algorithm.HMAC256(secret));
@@ -92,7 +93,7 @@ public class JwtUtil {
 
     public static Map<String,Claim> verify(String token){
         if(token == null){
-            return new HashMap<String, Claim>();
+            return null;
         }
         DecodedJWT dj = null;
         try {
@@ -106,7 +107,7 @@ public class JwtUtil {
 
     public static Map<String,Claim> verifyActivate(String token){
         if(token == null){
-            return new HashMap<String, Claim>();
+            return null;
         }
         DecodedJWT dj = null;
         try {

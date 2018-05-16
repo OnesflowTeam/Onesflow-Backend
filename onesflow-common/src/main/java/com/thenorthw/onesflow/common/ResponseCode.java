@@ -33,6 +33,7 @@ public enum ResponseCode {
     //login
     NO_SUCH_ACCOUNT_OR_PASSWORD_WRONG(1005,"No such account exists or wrong password"),
     LOGIN_FAIL(1006,"Login error."),
+    HAVE_NOT_ACTIVATED(1007,"Have not Activate"),
 
     //update user info
     OSS_UPLOAD_ERROR(1011,"upload error"),

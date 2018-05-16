@@ -37,6 +37,15 @@
         <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
     </resultMap>
 
+    <resultMap id="LoginRecordMaps" type="LoginRecord">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="uid" column="uid" jdbcType="BIGINT"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="success" column="success" jdbcType="INTEGER"/>
+        <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+        <result property="gmtModified" column="gmt_modified" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
     <sql id="fullColumns">
         `id`,
         `loginname`,
@@ -61,6 +70,7 @@
         `introduction`,
         `avatar`,
         `background_img`,
+        `gmt_activate`,
         `gmt_create`,
         `gmt_modified`
     </sql>
@@ -82,9 +92,29 @@
       VALUES (#{id},#{loginname},#{password},#{phone},#{roleId},#{nick},#{sex},#{introduction},#{avatar},#{backgroundImg},#{gmtActivate},#{gmtCreate},#{gmtModified})
     </insert>
 
+
+
     <select id="getUserProfileByLoginName" parameterType="string" resultMap="UserMaps">
-      select <include refid="fullColumns"/> from user where loginname=#{loginname}
+      select <include refid="fullColumns"/>
+        from user
+        where loginname=#{loginname}
     </select>
+
+    <select id="getDetailedUserInfoByUid" parameterType="long" resultMap="UserMaps">
+        select <include refid="infoColumns"/>
+        from user
+        where id=#{id}
+    </select>
+
+
+    <select id="getUserWithLAndP"  resultMap="UserMaps">
+        select <include refid="infoColumns"/>
+        from user
+        where loginname=#{loginname} AND password = #{password}
+    </select>
+
+
+
     <!--<select id="getUserProfileByUserId" parameterType="long" resultType="User">-->
         <!--SELECT-->
         <!--<include refid="infoColumns"/>-->
@@ -119,5 +149,17 @@
         SET gmt_activate = #{gmtActivate}
         WHERE id = #{id}
     </update>
+
+    <!--login record operations-->
+    <insert id="addLoginRecord" parameterType="LoginRecord" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO login_record(
+        `id`,
+        `uid`,
+        `address`,
+        `success`,
+        `gmt_create`,
+        `gmt_modified`)
+        VALUES (#{id},#{uid},#{address},#{success},#{gmtCreate},#{gmtModified})
+    </insert>
 
 </mapper>

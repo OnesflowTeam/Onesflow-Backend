@@ -1,5 +1,6 @@
 package com.thenorthw.onesflow.common.dao.user;
 
+import com.thenorthw.onesflow.common.model.user.LoginRecord;
 import com.thenorthw.onesflow.common.model.user.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -18,9 +19,15 @@ public interface UserDao {
     public int registerNewUser(User user);
 
     public User getUserProfileByLoginName(String loginname);
+    public User getDetailedUserInfoByUid(Long id);
+
+    public User getUserWithLAndP(@Param("loginname") String loginname,@Param("password") String password);
+    public int addLoginRecord(LoginRecord loginRecord);
 
     //activate
     public int activateUser(@Param("id") Long id, @Param("gmtActivate") Date time);
+
+
 
 //
 //    public User getUserProfileByUserId(long userId);

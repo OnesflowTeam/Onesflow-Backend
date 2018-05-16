@@ -1,15 +1,12 @@
 package com.thenorthw.onesflow.web.controller.user;
 
-import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.interfaces.Claim;
 import com.thenorthw.onesflow.common.ResponseCode;
 import com.thenorthw.onesflow.common.ResponseModel;
 import com.thenorthw.onesflow.common.enums.RoleType;
-import com.thenorthw.onesflow.common.model.mail.MailRecord;
 import com.thenorthw.onesflow.common.model.user.User;
 import com.thenorthw.onesflow.common.utils.JwtUtil;
 import com.thenorthw.onesflow.common.utils.ShortUUIDUtil;
-import com.thenorthw.onesflow.common.utils.json.JsonUtil;
 import com.thenorthw.onesflow.face.form.user.UserActivateForm;
 import com.thenorthw.onesflow.face.form.user.UserRegisterForm;
 import com.thenorthw.onesflow.web.service.user.UserService;

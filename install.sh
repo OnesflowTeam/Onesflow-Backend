@@ -30,3 +30,8 @@ else
     ln -s target/onesflow-web/onesflow-web onesflow-release
 
 fi
+
+# start server
+cd onesflow-release/bin
+
+./server-start.sh

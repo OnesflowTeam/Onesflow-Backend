@@ -15,9 +15,15 @@ public interface UserService {
 
     public int activateUser(Long id);
 
+    //login
+    public User userLoginByLP(String loginname,String password);
+    public User userLoginByToken(String token);
+
 
     //get info
     public User getUserByLoginName(String loginname);
+    //用户自己获取自己信息
+    public User getDetailedUserInfoByUid(Long uid);
 
 
 

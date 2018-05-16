@@ -23,6 +23,7 @@
     <typeAliases>
 
         <typeAlias alias="User" type="com.thenorthw.onesflow.common.model.user.User"/>
+        <typeAlias alias="LoginRecord" type="com.thenorthw.onesflow.common.model.user.LoginRecord"/>
         <typeAlias alias="MailRecord" type="com.thenorthw.onesflow.common.model.mail.MailRecord"/>
 
     </typeAliases>
