@@ -66,4 +66,10 @@ public class UserServiceImpl implements UserService{
     public User getUserByLoginName(String loginname) {
         return userDao.getUserProfileByLoginName(loginname);
     }
+
+    @Override
+    public int initUserInfo(Long id) {
+        //在博客模块下放入默认分类
+        return 0;
+    }
 }

@@ -123,7 +123,7 @@ CREATE TABLE `user` (
 
 
 --
--- 用户基本信息表
+-- 用户登录记录表
 --
 CREATE TABLE `login_record` (
   `id`             BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,

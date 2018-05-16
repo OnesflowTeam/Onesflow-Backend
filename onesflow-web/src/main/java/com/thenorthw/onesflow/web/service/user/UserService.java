@@ -20,4 +20,9 @@ public interface UserService {
     public User getUserByLoginName(String loginname);
 
 
+
+    //init user info
+    public int initUserInfo(Long id);
+
+
 }

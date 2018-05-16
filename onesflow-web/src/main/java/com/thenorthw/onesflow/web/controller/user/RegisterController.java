@@ -86,6 +86,7 @@ public class RegisterController {
         } else {
             //注册成功，利用mail来发送邮件
             logger.info("成功创建用户，id:{}，email:{}",user.getId(),user.getLoginname());
+            //初始化用户信息，比如在博客模块中放入默认分类
         }
 
         return responseModel;
