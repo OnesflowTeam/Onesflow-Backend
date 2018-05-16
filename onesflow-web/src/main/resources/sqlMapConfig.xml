@@ -32,6 +32,7 @@
     <mappers>
         <mapper resource="sqlMapper/user/user.xml"/>
         <mapper resource="sqlMapper/mail/mail.xml"/>
+        <mapper resource="sqlMapper/advice/advice.xml"/>
     </mappers>
 
 

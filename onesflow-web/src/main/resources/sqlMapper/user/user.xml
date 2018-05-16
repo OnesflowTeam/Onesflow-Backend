@@ -74,6 +74,7 @@
         `gmt_create`,
         `gmt_modified`
     </sql>
+
     <insert id="registerNewUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
       INSERT INTO user(
         `id`,

@@ -97,6 +97,21 @@ CREATE TABLE `mail_record` (
 )
   DEFAULT CHARACTER SET = utf8;
 
+-- ------------------------------------------------------------------------  建议部分  ----------------------------------------------------------------------------
+
+--
+-- 建议表
+--
+CREATE TABLE `advice` (
+  `id`             BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `email`         VARCHAR(128) DEFAULT NULL ,
+  `advice`        VARCHAR(1024) NOT NULL ,
+  `gmt_create`     DATETIME        NOT NULL,
+  `gmt_modified`   DATETIME        NOT NULL,
+  PRIMARY KEY (`id`)
+)
+  DEFAULT CHARACTER SET = utf8;
+
 
 -- ------------------------------------------------------------------------  用户信息部分  ----------------------------------------------------------------------------
 

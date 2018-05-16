@@ -73,7 +73,6 @@ public class UserServiceImpl implements UserService{
             insertLoginRecord(user,1);
 
             //将这两行不对外显示
-            user.setPassword(null);
             user.setLoginname(null);
         }else {
             //插入登录失败记录

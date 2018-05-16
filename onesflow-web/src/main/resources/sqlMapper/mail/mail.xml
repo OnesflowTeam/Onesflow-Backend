@@ -83,10 +83,4 @@
         <!--WHERE id = #{id}-->
     <!--</update>-->
 
-    <update id="activateUser">
-        UPDATE user
-        SET gmt_activate = #{gmtActivate}
-        WHERE id = #{id}
-    </update>
-
 </mapper>
