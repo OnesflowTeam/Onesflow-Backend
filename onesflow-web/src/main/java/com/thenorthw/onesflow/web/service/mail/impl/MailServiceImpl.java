@@ -42,6 +42,10 @@ public class MailServiceImpl implements MailService{
         //首先查找是否有该用户
         User user = userService.getUserByLoginName(email);
         if(user != null){
+            //如果已经激活则不再发送
+            if(user.getGmtActivate() != null){
+                return -3;
+            }
             //查找上一次发送记录
             MailRecord mailRecord = mailDao.getMailRecordByToUserAndType(user.getId(),MailType.ACTIVATE_MAIL.getType());
             if(mailRecord == null){

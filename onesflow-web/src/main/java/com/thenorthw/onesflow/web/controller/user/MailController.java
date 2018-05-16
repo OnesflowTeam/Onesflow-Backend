@@ -40,6 +40,9 @@ public class MailController {
         }else if(result == -2){
             responseModel.setResponseCode(ResponseCode.ACTIVATE_MAIL_SEND_TOO_FREQUENTLY.getCode());
             responseModel.setMessage(ResponseCode.ACTIVATE_MAIL_SEND_TOO_FREQUENTLY.getMessage());
+        }else if(result == -3){
+            responseModel.setResponseCode(ResponseCode.ALREADY_ACTIVATED.getCode());
+            responseModel.setMessage(ResponseCode.ALREADY_ACTIVATED.getMessage());
         }
 
         return responseModel;
