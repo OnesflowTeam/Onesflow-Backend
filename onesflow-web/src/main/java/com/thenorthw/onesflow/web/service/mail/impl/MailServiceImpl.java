@@ -10,6 +10,7 @@ import com.thenorthw.onesflow.web.service.mail.MailService;
 import com.thenorthw.onesflow.web.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -20,6 +21,7 @@ import java.util.Date;
  * @autuor : theNorthW
  */
 @Service
+@Transactional
 public class MailServiceImpl implements MailService{
     @Autowired
     MailDao mailDao;

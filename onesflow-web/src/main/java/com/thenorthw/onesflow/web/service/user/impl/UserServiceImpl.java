@@ -9,6 +9,7 @@ import com.thenorthw.onesflow.web.service.mail.MailService;
 import com.thenorthw.onesflow.web.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -22,6 +23,7 @@ import java.util.Map;
  * @autuor : theNorthW
  */
 @Service
+@Transactional
 public class UserServiceImpl implements UserService{
     @Autowired
     HttpServletRequest httpServletRequest;
