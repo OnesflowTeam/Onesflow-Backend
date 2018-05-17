@@ -63,8 +63,14 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public int activateUser(Long id) {
-        return userDao.activateUser(id,new Date());
-        //如果激活成功，则初始化其他模块信息
+        if(userDao.activateUser(id,new Date()) == 1){
+            //如果激活成功，则初始化其他模块信息
+            initUserInfo(id);
+            return 1;
+        }else {
+            return -1;
+        }
+
 
     }
 
