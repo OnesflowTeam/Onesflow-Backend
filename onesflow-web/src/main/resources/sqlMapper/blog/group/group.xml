@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thenorthw.onesflow.common.dao.blog.group.BlogGroupDao">
+
+    <resultMap id="BlogGroupMap" type="BlogGroup">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="en" property="en" jdbcType="VARCHAR"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="fullColumns">
+        id,
+        uid,
+        name,
+        en,
+        gmt_create,
+        gmt_modified
+    </sql>
+
+
+    <select id="getAllGroup"  parameterType="long" resultMap="BlogGroupMap" >
+        SELECT
+        id,
+        uid,
+        name,
+        en
+        FROM blog_group
+        WHERE uid = #{uid};
+    </select>
+
+    <select id="getGroupByName"  resultMap="BlogGroupMap">
+        SELECT
+        id,
+        uid,
+        name,
+        en
+        FROM blog_group
+        WHERE uid = #{uid} AND name = #{name};
+    </select>
+
+    <select id="getGroupByEn" resultMap="BlogGroupMap">
+        SELECT
+        id,
+        uid,
+        name,
+        en
+        FROM blog_group
+        WHERE uid = #{uid} AND en = #{en};
+    </select>
+
+
+    <select id="getGroupById" resultMap="BlogGroupMap">
+        SELECT
+        id,
+        uid,
+        name,
+        en
+        FROM blog_group
+        WHERE uid = #{uid} AND id = #{gid};
+    </select>
+
+
+    <insert id="addGroup" parameterType="BlogGroup" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO blog_group(
+        uid,
+        name,
+        en,
+        gmt_create,
+        gmt_modified
+        )
+        VALUES(#{uid},#{name},#{en},now(),now())
+    </insert>
+
+    <update id="updateGroup" parameterType="BlogGroup">
+        UPDATE blog_group
+        SET name = #{name}, en = #{en},gmt_modified = now()
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteGroup" parameterType="Long">
+        DELETE FROM blog_group
+        WHERE id = #{id}
+    </delete>
+</mapper>

@@ -4,6 +4,7 @@ import com.auth0.jwt.interfaces.Claim;
 import com.thenorthw.onesflow.common.ResponseCode;
 import com.thenorthw.onesflow.common.ResponseModel;
 import com.thenorthw.onesflow.common.annotation.LoginNeed;
+import com.thenorthw.onesflow.common.constants.OnesflowConstant;
 import com.thenorthw.onesflow.common.utils.JwtUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -44,7 +45,7 @@ public class OnesflowInterceptor {
         //登录验证
         LoginNeed loginNeed = ((MethodSignature) pjp.getSignature()).getMethod().getAnnotation(LoginNeed.class);
         if(loginNeed != null){
-            Map<String,Claim> uidc = JwtUtil.verify(httpServletRequest.getHeader("x-token"));
+            Map<String,Claim> uidc = JwtUtil.verify(httpServletRequest.getHeader(OnesflowConstant.TOKEN_HEADER));
             Long uid = JwtUtil.getUidFromClaims(uidc);
             if (uid == null){
                 responseModel.setResponseCode(ResponseCode.UNAUTHORIZED.getCode());
@@ -76,7 +77,7 @@ public class OnesflowInterceptor {
         //登录验证
         LoginNeed loginNeed = ((MethodSignature) pjp.getSignature()).getMethod().getAnnotation(LoginNeed.class);
         if(loginNeed != null){
-            Map<String,Claim> uidc = JwtUtil.verify(httpServletRequest.getHeader("x-token"));
+            Map<String,Claim> uidc = JwtUtil.verify(httpServletRequest.getHeader(OnesflowConstant.TOKEN_HEADER));
             Long uid = JwtUtil.getUidFromClaims(uidc);
             if (uid == null){
                 responseModel.setResponseCode(ResponseCode.UNAUTHORIZED.getCode());

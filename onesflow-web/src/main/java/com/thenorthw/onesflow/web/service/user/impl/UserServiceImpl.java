@@ -5,6 +5,7 @@ import com.thenorthw.onesflow.common.dao.user.UserDao;
 import com.thenorthw.onesflow.common.model.user.LoginRecord;
 import com.thenorthw.onesflow.common.model.user.User;
 import com.thenorthw.onesflow.common.utils.JwtUtil;
+import com.thenorthw.onesflow.web.service.blog.group.BlogGroupService;
 import com.thenorthw.onesflow.web.service.mail.MailService;
 import com.thenorthw.onesflow.web.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,8 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     MailService mailService;
+    @Autowired
+    BlogGroupService blogGroupService;
 
     @Override
     public int register(User user) {
@@ -61,6 +64,8 @@ public class UserServiceImpl implements UserService{
     @Override
     public int activateUser(Long id) {
         return userDao.activateUser(id,new Date());
+        //如果激活成功，则初始化其他模块信息
+
     }
 
     @Override
@@ -117,6 +122,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public User getSimpleUserInfoByUid(Long uid) {
+        return userDao.getSimpleUserInfoByUid(uid);
+    }
+
+    @Override
     public int updateUserInfo(User user) {
         return userDao.updateUserInfo(user);
     }
@@ -132,9 +142,9 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public int initUserInfo(Long id) {
+    public void initUserInfo(Long id) {
         //在博客模块下放入默认分类
-        return 0;
+        blogGroupService.initBlogWhenActivateUser(id);
     }
 
 

@@ -231,9 +231,9 @@ CREATE TABLE `blog_article_content` (
 --
 CREATE TABLE `blog_group` (
   `id`              BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `uid`             BIGINT UNSIGNED NOT NULL ,  -- 标识哪个用户创建了他
-  `name`            VARCHAR(18)     NOT NULL DEFAULT 'group',
-  `en`              VARCHAR(38)     NOT NULL DEFAULT 'group-english-name',
+  `uid`             BIGINT UNSIGNED NOT NULL ,  -- 这个group属于哪个用户
+  `name`            VARCHAR(18)     NOT NULL DEFAULT 'blogGroup',
+  `en`              VARCHAR(38)     NOT NULL DEFAULT 'blogGroup-english-name',
   `gmt_create`      DATETIME        NOT NULL,
   `gmt_modified`    DATETIME        NOT NULL,
   PRIMARY KEY (`id`)

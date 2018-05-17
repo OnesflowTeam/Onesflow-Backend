@@ -20,6 +20,7 @@ public interface UserDao {
 
     public User getUserProfileByLoginName(String loginname);
     public User getDetailedUserInfoByUid(Long id);
+    public User getSimpleUserInfoByUid(Long id);
 
     public User getUserWithLAndP(@Param("loginname") String loginname,@Param("password") String password);
     public int addLoginRecord(LoginRecord loginRecord);

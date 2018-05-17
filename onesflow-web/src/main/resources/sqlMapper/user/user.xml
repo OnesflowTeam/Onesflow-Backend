@@ -75,6 +75,14 @@
         `gmt_modified`
     </sql>
 
+    <sql id="simpleInfoColumns">
+        `id`,
+        `nick`,
+        `sex`,
+        `introduction`,
+        `avatar`
+    </sql>
+
     <insert id="registerNewUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
       INSERT INTO user(
         `id`,
@@ -103,6 +111,12 @@
 
     <select id="getDetailedUserInfoByUid" parameterType="long" resultMap="UserMaps">
         select <include refid="infoColumns"/>
+        from user
+        where id=#{id}
+    </select>
+
+    <select id="getSimpleUserInfoByUid" parameterType="long" resultMap="UserMaps">
+        select <include refid="simpleInfoColumns"/>
         from user
         where id=#{id}
     </select>

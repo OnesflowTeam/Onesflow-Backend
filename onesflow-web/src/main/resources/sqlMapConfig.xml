@@ -26,6 +26,11 @@
         <typeAlias alias="LoginRecord" type="com.thenorthw.onesflow.common.model.user.LoginRecord"/>
         <typeAlias alias="MailRecord" type="com.thenorthw.onesflow.common.model.mail.MailRecord"/>
 
+        <typeAlias alias="BlogArticle" type="com.thenorthw.onesflow.common.model.blog.article.BlogArticle"/>
+        <typeAlias alias="BlogArticleContent" type="com.thenorthw.onesflow.common.model.blog.article.BlogArticleContent"/>
+
+        <typeAlias alias="BlogGroup" type="com.thenorthw.onesflow.common.model.blog.group.BlogGroup"/>
+        <typeAlias alias="BlogRArticleGroup" type="com.thenorthw.onesflow.common.model.blog.group.BlogRArticleGroup"/>
     </typeAliases>
 
     <!-- 指定映射器路径 -->
@@ -33,6 +38,13 @@
         <mapper resource="sqlMapper/user/user.xml"/>
         <mapper resource="sqlMapper/mail/mail.xml"/>
         <mapper resource="sqlMapper/advice/advice.xml"/>
+
+        <mapper resource="sqlMapper/blog/group/group.xml"/>
+        <mapper resource="sqlMapper/blog/group/rarticlegroup.xml"/>
+
+
+        <mapper resource="sqlMapper/blog/article/article.xml"/>
+        <mapper resource="sqlMapper/blog/article/articlecontent.xml"/>
     </mappers>
 
 

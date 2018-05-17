@@ -4,6 +4,7 @@ import com.auth0.jwt.interfaces.Claim;
 import com.thenorthw.onesflow.common.ResponseCode;
 import com.thenorthw.onesflow.common.ResponseModel;
 import com.thenorthw.onesflow.common.annotation.LoginNeed;
+import com.thenorthw.onesflow.common.constants.OnesflowConstant;
 import com.thenorthw.onesflow.common.model.user.User;
 import com.thenorthw.onesflow.common.utils.JwtUtil;
 import com.thenorthw.onesflow.face.form.user.UserChangePasswordForm;
@@ -48,7 +49,7 @@ public class PasswordController {
     public ResponseModel changePassword(@Valid UserChangePasswordForm userChangePasswordForm, BindingResult bindingResult) {
         ResponseModel responseModel = new ResponseModel();
 
-        String token = httpServletRequest.getHeader("x-token");
+        String token = httpServletRequest.getHeader(OnesflowConstant.TOKEN_HEADER);
 
         Long uid = JwtUtil.getUidFromClaims(JwtUtil.verify(token));
 

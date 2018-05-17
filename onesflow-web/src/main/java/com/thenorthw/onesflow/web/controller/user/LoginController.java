@@ -4,6 +4,7 @@ import com.auth0.jwt.interfaces.Claim;
 import com.thenorthw.onesflow.common.ResponseCode;
 import com.thenorthw.onesflow.common.ResponseModel;
 import com.thenorthw.onesflow.common.annotation.LoginNeed;
+import com.thenorthw.onesflow.common.constants.OnesflowConstant;
 import com.thenorthw.onesflow.common.model.user.User;
 import com.thenorthw.onesflow.common.utils.JwtUtil;
 import com.thenorthw.onesflow.face.form.user.UserLoginForm;
@@ -56,7 +57,7 @@ public class LoginController {
                 responseModel.setMessage(ResponseCode.HAVE_NOT_ACTIVATED.getMessage());
             }else{
                 //在response header中放入x-token
-                httpServletResponse.addHeader("x-token", JwtUtil.createToken(user.getId().toString(),userLoginForm.getRemember().equals("1")));
+                httpServletResponse.addHeader(OnesflowConstant.TOKEN_HEADER, JwtUtil.createToken(user.getId().toString(),userLoginForm.getRemember().equals("1")));
                 responseModel.setData(user);
             }
         }
@@ -69,7 +70,7 @@ public class LoginController {
     public ResponseModel loginByToken() {
         ResponseModel responseModel = new ResponseModel();
 
-        User user = userService.userLoginByToken(httpServletRequest.getHeader("x-token"));
+        User user = userService.userLoginByToken(httpServletRequest.getHeader(OnesflowConstant.TOKEN_HEADER));
 
         if(user == null){
             responseModel.setResponseCode(ResponseCode.UNAUTHORIZED.getCode());

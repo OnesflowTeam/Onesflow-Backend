@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thenorthw.onesflow.common.dao.blog.article.BlogArticleDao">
+
+    <resultMap id="BlogArticleMap" type="BlogArticle">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="creator" property="creator" jdbcType="VARCHAR"/>
+        <result column="view" property="view" jdbcType="INTEGER"/>
+        <result column="grammar" property="grammar" jdbcType="INTEGER"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="fullColumns">
+        id,
+        name,
+        creator,
+        view,
+        grammar,
+        gmt_create,
+        gmt_modified
+    </sql>
+
+
+    <select id="getRecentArticles"  resultMap="BlogArticleMap" >
+        SELECT
+        id,
+        name,
+        creator,
+        view,
+        grammar,
+        gmt_create,
+        gmt_modified
+        FROM blog_article
+        WHERE creator = #{uid}
+        ORDER BY gmt_modified DESC
+        LIMIT 0, #{limit};
+    </select>
+
+    <select id="getAllArticles" resultMap="BlogArticleMap">
+        SELECT
+        id,
+        name,
+        creator,
+        view,
+        grammar,
+        gmt_create,
+        gmt_modified
+        FROM blog_article
+        WHERE creator = #{uid}
+        LIMIT #{startNumber},#{pageSize};
+    </select>
+
+    <select id="getArticleById" parameterType="long" resultMap="BlogArticleMap">
+        SELECT
+        id,
+        name,
+        creator,
+        view,
+        grammar,
+        gmt_create,
+        gmt_modified
+        FROM blog_article
+        WHERE id = #{id}
+    </select>
+    <select id="getTotalNumber" resultType="java.lang.Integer">
+        SELECT
+        COUNT(*)
+        FROM blog_article
+        WHERE creator = #{uid}
+    </select>
+
+    <select id="getArticleByIds"  resultMap="BlogArticleMap">
+        SELECT
+        id,
+        name,
+        creator,
+        view,
+        grammar,
+        gmt_create,
+        gmt_modified
+        FROM blog_article
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" close=")"
+                 separator=",">
+        #{id}
+        </foreach>
+    </select>
+
+    <update id="updateViewTimes" parameterType="long">
+        UPDATE blog_article
+        SET view = view + 1
+        WHERE id = #{id}
+    </update>
+
+    <insert id="postArticle" parameterType="BlogArticle" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO blog_article(
+        name,
+        creator,
+        grammar,
+        gmt_create,
+        gmt_modified
+        )
+        VALUES(#{name},#{creator},#{grammar},now(),now())
+    </insert>
+
+    <update id="updateArticle" parameterType="BlogArticle">
+        UPDATE blog_article
+        SET name = #{name},  grammar = #{grammar}, gmt_modified = now()
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteArticle" parameterType="Long">
+        DELETE FROM blog_article
+        WHERE id = #{id}
+    </delete>
+</mapper>

@@ -3,14 +3,17 @@ package com.thenorthw.onesflow.web.controller.user;
 import com.thenorthw.onesflow.common.ResponseCode;
 import com.thenorthw.onesflow.common.ResponseModel;
 import com.thenorthw.onesflow.common.annotation.LoginNeed;
+import com.thenorthw.onesflow.common.constants.OnesflowConstant;
 import com.thenorthw.onesflow.common.model.user.User;
 import com.thenorthw.onesflow.common.utils.JwtUtil;
+import com.thenorthw.onesflow.common.utils.NumberAssert;
 import com.thenorthw.onesflow.face.form.user.UserInfoUpdateForm;
 import com.thenorthw.onesflow.face.form.user.UserLoginForm;
 import com.thenorthw.onesflow.web.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,13 +41,29 @@ public class UserInfoController {
     UserService userService;
 
 
+    @RequestMapping(value = "/user/{uid}",method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseModel getSimpleUserInfo(@PathVariable String uid) {
+        ResponseModel responseModel = new ResponseModel();
+
+        if(!uid.matches("^[1-9]\\d*") ||   !NumberAssert.isLong(uid)){
+            responseModel.setResponseCode(ResponseCode.PARAMETER_ERROR.getCode());
+            responseModel.setMessage(ResponseCode.PARAMETER_ERROR.getMessage());
+            return responseModel;
+        }
+        responseModel.setData(userService.getSimpleUserInfoByUid(Long.parseLong(uid)));
+
+        return responseModel;
+    }
+
+
     @RequestMapping(value = "/user/info",method = RequestMethod.POST)
     @ResponseBody
     @LoginNeed
     public ResponseModel login(@Valid UserInfoUpdateForm userInfoUpdateForm, BindingResult bindingResult) {
         ResponseModel responseModel = new ResponseModel();
 
-        String token = httpServletRequest.getHeader("x-token");
+        String token = httpServletRequest.getHeader(OnesflowConstant.TOKEN_HEADER);
 
         Long uid = JwtUtil.getUidFromClaims(JwtUtil.verify(token));
 

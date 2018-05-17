@@ -24,6 +24,7 @@ public interface UserService {
     public User getUserByLoginName(String loginname);
     //用户自己获取自己信息
     public User getDetailedUserInfoByUid(Long uid);
+    public User getSimpleUserInfoByUid(Long uid);
     //update
     public int updateUserInfo(User user);
 
@@ -35,7 +36,7 @@ public interface UserService {
 
 
     //init user info
-    public int initUserInfo(Long id);
+    public void initUserInfo(Long id);
 
 
 }

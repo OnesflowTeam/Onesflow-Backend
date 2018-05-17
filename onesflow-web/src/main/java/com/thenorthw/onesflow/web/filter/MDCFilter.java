@@ -25,7 +25,7 @@ public class MDCFilter implements Filter {
             String requestId = ShortUUIDUtil.generateRequestId();
             HttpServletResponse response = (HttpServletResponse) servletResponse;
             response.addHeader(OnesflowConstant.HTTP_REQUEST_ID_HEADER, requestId);
-            response.addHeader("Access-Control-Expose-Headers","x-token");
+            response.addHeader("Access-Control-Expose-Headers",OnesflowConstant.TOKEN_HEADER);
 
             //将requestId 放到MDC中, 供日志打印
             MDC.put(OnesflowConstant.HTTP_REQUEST_ID_HEADER, requestId);
