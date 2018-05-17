@@ -72,8 +72,8 @@ public class LoginController {
         User user = userService.userLoginByToken(httpServletRequest.getHeader("x-token"));
 
         if(user == null){
-            responseModel.setResponseCode(ResponseCode.LOGIN_FAIL.getCode());
-            responseModel.setMessage(ResponseCode.LOGIN_FAIL.getMessage());
+            responseModel.setResponseCode(ResponseCode.UNAUTHORIZED.getCode());
+            responseModel.setMessage(ResponseCode.UNAUTHORIZED.getMessage());
         }else if(user.getGmtActivate() == null){
             //未激活账号，不予登录
             responseModel.setResponseCode(ResponseCode.HAVE_NOT_ACTIVATED.getCode());

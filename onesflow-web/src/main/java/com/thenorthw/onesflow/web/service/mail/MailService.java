@@ -13,4 +13,7 @@ public interface MailService {
     public int sendActivateMailAfterRegister(User user, String token);
 
     public int sendActivateMailAgain(String email);
+
+
+    public int sendResetpMail(String email);
 }

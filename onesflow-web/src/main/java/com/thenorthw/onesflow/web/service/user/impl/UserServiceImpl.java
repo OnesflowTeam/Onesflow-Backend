@@ -70,13 +70,14 @@ public class UserServiceImpl implements UserService{
             return null;
         }else if(user.getPassword().equals(password)){
             //插入登录记录
-            insertLoginRecord(user,1);
+            insertLoginRecord(user,1,1);
 
             //将这两行不对外显示
             user.setLoginname(null);
+            user.setPassword(null);
         }else {
             //插入登录失败记录
-            insertLoginRecord(user,0);
+            insertLoginRecord(user,0,1);
             return null;
         }
 
@@ -88,17 +89,17 @@ public class UserServiceImpl implements UserService{
         Map<String,Claim> cs = JwtUtil.verify(token);
 
         if(token == null || cs == null){
-            insertLoginRecord(null,0);
+            insertLoginRecord(null,0,2);
             return null;
         }
 
         if(JwtUtil.getUidFromClaims(cs) == null){
-            insertLoginRecord(null,0);
+            insertLoginRecord(null,0,2);
             return null;
         }
 
         User user = getDetailedUserInfoByUid(JwtUtil.getUidFromClaims(cs));
-        insertLoginRecord(user,1);
+        insertLoginRecord(user,1,2);
 
         return user;
     }
@@ -124,6 +125,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public int changePasswordByToken(Long id, String newpass) {
+        return userDao.changePasswordDirectly(id,newpass);
+    }
+
+    @Override
     public int initUserInfo(Long id) {
         //在博客模块下放入默认分类
         return 0;
@@ -131,7 +137,7 @@ public class UserServiceImpl implements UserService{
 
 
     //插入登录记录
-    private void insertLoginRecord(User user,Integer success){
+    private void insertLoginRecord(User user,Integer success,int type){
         String fromSource = "X-Real-IP";
         String ip = httpServletRequest.getHeader("X-Real-IP");
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
@@ -153,7 +159,7 @@ public class UserServiceImpl implements UserService{
         LoginRecord loginRecord = new LoginRecord();
         Date now = new Date();
         loginRecord.setUid(user == null ? 4444444444444444444L : user.getId());
-        loginRecord.setAddress(ip+"|"+fromSource);
+        loginRecord.setAddress(ip+"|"+fromSource+"|" + (type == 1 ? "p" : "t"));
         loginRecord.setGmtCreate(now);
         loginRecord.setGmtModified(now);
         loginRecord.setSuccess(success);

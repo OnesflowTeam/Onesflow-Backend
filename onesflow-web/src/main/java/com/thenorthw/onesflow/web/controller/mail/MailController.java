@@ -1,4 +1,4 @@
-package com.thenorthw.onesflow.web.controller.user;
+package com.thenorthw.onesflow.web.controller.mail;
 
 import com.thenorthw.onesflow.common.ResponseCode;
 import com.thenorthw.onesflow.common.ResponseModel;
@@ -43,6 +43,29 @@ public class MailController {
         }else if(result == -3){
             responseModel.setResponseCode(ResponseCode.ALREADY_ACTIVATED.getCode());
             responseModel.setMessage(ResponseCode.ALREADY_ACTIVATED.getMessage());
+        }
+
+        return responseModel;
+    }
+
+    @RequestMapping(value = "/mail/resetp",method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseModel sendResetpMail(@Valid MailAddressForm mailAddressForm , BindingResult bindingResult){
+        ResponseModel responseModel = new ResponseModel();
+
+        int result = mailService.sendResetpMail(mailAddressForm.getEmail());
+        if(result == 0){
+            responseModel.setResponseCode(ResponseCode.INTERNAL_SERVER_ERROR.getCode());
+            responseModel.setMessage(ResponseCode.INTERNAL_SERVER_ERROR.getMessage());
+        }else if(result == -1){
+            responseModel.setResponseCode(ResponseCode.NO_SUCH_USER.getCode());
+            responseModel.setMessage(ResponseCode.NO_SUCH_USER.getMessage());
+        }else if(result == -2){
+            responseModel.setResponseCode(ResponseCode.RESETP_MAIL_SEND_TOO_FREQUENTLY.getCode());
+            responseModel.setMessage(ResponseCode.RESETP_MAIL_SEND_TOO_FREQUENTLY.getMessage());
+        }else if(result == -3){
+            responseModel.setResponseCode(ResponseCode.HAVE_NOT_ACTIVATED.getCode());
+            responseModel.setMessage(ResponseCode.HAVE_NOT_ACTIVATED.getMessage());
         }
 
         return responseModel;

@@ -33,6 +33,7 @@ public interface UserDao {
 
     //password
     public int changePassword(@Param("id")Long id,@Param("oldpass")String oldpass,@Param("newpass")String newpass);
+    public int changePasswordDirectly(@Param("id")Long id,@Param("newpass")String newpass);
 
 
 //

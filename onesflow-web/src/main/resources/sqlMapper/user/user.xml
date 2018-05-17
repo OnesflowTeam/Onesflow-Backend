@@ -157,6 +157,13 @@
         WHERE id = #{id} AND password = #{oldpass}
     </update>
 
+    <update id="changePasswordDirectly">
+        UPDATE user
+        SET password = #{newpass} ,gmt_modified = now()
+        WHERE id = #{id}
+    </update>
+
+
     <update id="activateUser">
         UPDATE user
         SET gmt_activate = #{gmtActivate}

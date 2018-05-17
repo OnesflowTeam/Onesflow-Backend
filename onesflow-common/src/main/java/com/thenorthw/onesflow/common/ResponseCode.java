@@ -26,8 +26,10 @@ public enum ResponseCode {
 
     //mail
     ILLEGAL_ACTIVATE_TOKEN(1001,"Illegal activate token"),
+    ILLEGAL_RESETP_TOKEN(1013,"Illegal resetp token"),
     ACTIVATE_MAIL_SEND_FAIL(1002,"Send activate mail fail"),
     ACTIVATE_MAIL_SEND_TOO_FREQUENTLY(1004,"Send activate mail too frequently"),
+    RESETP_MAIL_SEND_TOO_FREQUENTLY(1009,"Send resetp mail too frequently"),
     NO_SUCH_USER(1003,"no such user"),
     ALREADY_ACTIVATED(1008,"Already activated."),
 

@@ -7,7 +7,8 @@ package com.thenorthw.onesflow.common.enums;
  * @autuor : theNorthW
  */
 public enum MailType {
-    ACTIVATE_MAIL(1,"activate_mail");
+    ACTIVATE_MAIL(1,"activate_mail"),
+    RESETP_MAIL(2,"resetp mail");
 
     private String name;
     public int type;

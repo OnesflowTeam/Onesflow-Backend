@@ -30,6 +30,7 @@ public interface UserService {
 
     //password
     public int changePassword(Long id, String oldpass, String newpass);
+    public int changePasswordByToken(Long id, String newpass);
 
 
 
