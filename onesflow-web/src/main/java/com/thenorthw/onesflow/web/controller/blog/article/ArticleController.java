@@ -8,6 +8,8 @@ import com.thenorthw.onesflow.common.model.blog.article.BlogArticle;
 import com.thenorthw.onesflow.common.model.blog.article.BlogArticleContent;
 import com.thenorthw.onesflow.common.model.blog.group.BlogGroup;
 import com.thenorthw.onesflow.common.model.blog.group.BlogRArticleGroup;
+import com.thenorthw.onesflow.common.model.blog.tag.BlogRArticleTag;
+import com.thenorthw.onesflow.common.model.blog.tag.BlogTag;
 import com.thenorthw.onesflow.common.utils.JwtUtil;
 import com.thenorthw.onesflow.common.utils.NumberAssert;
 import com.thenorthw.onesflow.face.dto.blog.article.BlogArticleDto;
@@ -16,6 +18,7 @@ import com.thenorthw.onesflow.face.form.blog.article.ArticlePostForm;
 import com.thenorthw.onesflow.face.form.blog.article.ArticleUpdateForm;
 import com.thenorthw.onesflow.web.service.blog.article.BlogArticleService;
 import com.thenorthw.onesflow.web.service.blog.group.BlogGroupService;
+import com.thenorthw.onesflow.web.service.blog.tag.BlogTagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -42,6 +45,8 @@ public class ArticleController {
 	BlogArticleService blogArticleService;
 	@Autowired
 	BlogGroupService blogGroupService;
+	@Autowired
+    BlogTagService blogTagService;
 
 	/**
 	 * 来获取最近发表的article 10篇
@@ -94,13 +99,24 @@ public class ArticleController {
 		return responseModel;
 	}
 
-
-	@RequestMapping(value = "/blog/u/{id}/group/{groupName}",method = RequestMethod.GET)
+    /**
+     * 此处不用返回很详细的信息，连tag都不用返回
+     * @param groupName
+     * @param id
+     * @return
+     */
+	@RequestMapping(value = "/blog/u/{id}/groups/{groupName}",method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseModel getArticleInGroup(@PathVariable String groupName,@PathVariable String id){
 		ResponseModel responseModel = new ResponseModel();
 
 		if(!id.matches("^[1-9]\\d*")  || !NumberAssert.isLong(id)){
+			responseModel.setResponseCode(ResponseCode.PARAMETER_ERROR.getCode());
+			responseModel.setMessage(ResponseCode.PARAMETER_ERROR.getMessage());
+			return responseModel;
+		}
+
+		if(!groupName.matches("^[A-Za-z0-9]{1,18}$")){
 			responseModel.setResponseCode(ResponseCode.PARAMETER_ERROR.getCode());
 			responseModel.setMessage(ResponseCode.PARAMETER_ERROR.getMessage());
 			return responseModel;
@@ -114,6 +130,10 @@ public class ArticleController {
 
 			List<Long> ids = new ArrayList<Long>();
 
+			if(rs.size() == 0){
+				return responseModel;
+			}
+
 			for(BlogRArticleGroup r : rs){
 				ids.add(r.getArticleId());
 			}
@@ -124,6 +144,62 @@ public class ArticleController {
 			for(BlogArticle a : l1){
 				BlogArticleDto t = new BlogArticleDto(a,null);
 				t.setGroup(blogGroup.getId());
+				l2.add(t);
+			}
+
+			responseModel.setData(l2);
+		}else {
+			responseModel.setResponseCode(ResponseCode.PARAMETER_ERROR.getCode());
+			responseModel.setMessage(ResponseCode.PARAMETER_ERROR.getMessage());
+		}
+
+		return responseModel;
+	}
+
+    /**
+     * 此处不用返回很详细的信息，连group都不用返回
+     * @param tagName
+     * @param id
+     * @return
+     */
+	@RequestMapping(value = "/blog/u/{id}/tags/{tagName}",method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseModel getArticleInTag(@PathVariable String tagName,@PathVariable String id){
+		ResponseModel responseModel = new ResponseModel();
+
+		if(!id.matches("^[1-9]\\d*")  || !NumberAssert.isLong(id)){
+			responseModel.setResponseCode(ResponseCode.PARAMETER_ERROR.getCode());
+			responseModel.setMessage(ResponseCode.PARAMETER_ERROR.getMessage());
+			return responseModel;
+		}
+
+		if(!tagName.matches("^[A-Za-z0-9]{1,18}$")){
+			responseModel.setResponseCode(ResponseCode.PARAMETER_ERROR.getCode());
+			responseModel.setMessage(ResponseCode.PARAMETER_ERROR.getMessage());
+			return responseModel;
+		}
+
+		Long uid = Long.parseLong(id);
+		//首先在tag表中找到tagId，然后到关系表中找到tag下的文章
+		BlogTag blogTag = blogTagService.getTagByEn(uid,tagName);
+		if(blogTag != null) {
+			List<BlogRArticleTag> rs = blogTagService.getArticlesInTag(uid,blogTag.getId());
+
+			List<Long> ids = new ArrayList<Long>();
+
+			if(rs.size() == 0){
+				return responseModel;
+			}
+
+			for(BlogRArticleTag r : rs){
+				ids.add(r.getArticleId());
+			}
+
+			List<BlogArticle> l1 = blogArticleService.getArticlesByIds(ids);
+			List<BlogArticleDto> l2 = new ArrayList<BlogArticleDto>();
+
+			for(BlogArticle a : l1){
+				BlogArticleDto t = new BlogArticleDto(a,null);
 				l2.add(t);
 			}
 
@@ -205,7 +281,13 @@ public class ArticleController {
 		content.setContent(articlePostForm.getContent());
 		content.setLength(articlePostForm.getContent().length());
 
-		BlogArticleDto blogArticleDto = blogArticleService.postArticle(blogArticle,content,Long.parseLong(articlePostForm.getGroup()));
+		//增加tags处理部分
+        String[] tsS = articlePostForm.getTags() != null ? articlePostForm.getTags().split(",") : new String[]{};
+        List<Long> ls = new ArrayList<>(tsS.length);
+        for(String ts : tsS){
+            ls.add(Long.parseLong(ts));
+        }
+		BlogArticleDto blogArticleDto = blogArticleService.postArticle(blogArticle,content,Long.parseLong(articlePostForm.getGroup()),ls);
 
 		if(blogArticleDto == null){
 			responseModel.setResponseCode(ResponseCode.FORBIDDEN.getCode());
@@ -242,7 +324,13 @@ public class ArticleController {
 		content.setLength(articleUpdateForm.getContent().length());
 		content.setGmtModified(now);
 
-		Integer result = blogArticleService.updateArticle(blogArticle,content, JwtUtil.getUidFromClaims(JwtUtil.verify(httpServletRequest.getHeader(OnesflowConstant.TOKEN_HEADER))),Long.parseLong(articleUpdateForm.getGroup()));
+        //增加tags处理部分
+        String[] tsS = articleUpdateForm.getTags() != null ? articleUpdateForm.getTags().split(",") : new String[]{};
+        List<Long> ls = new ArrayList<>(tsS.length);
+        for(String ts : tsS){
+            ls.add(Long.parseLong(ts));
+        }
+		Integer result = blogArticleService.updateArticle(blogArticle,content, JwtUtil.getUidFromClaims(JwtUtil.verify(httpServletRequest.getHeader(OnesflowConstant.TOKEN_HEADER))),Long.parseLong(articleUpdateForm.getGroup()),ls);
 
 		if(result.equals(-1)){
 			responseModel.setResponseCode(ResponseCode.FORBIDDEN.getCode());

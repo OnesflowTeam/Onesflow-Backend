@@ -41,7 +41,7 @@ public class GroupController {
 	 * service此处还会做一个缓存操作，因为article group不会有太大变动，这样就可以减轻数据库压力
 	 * @return
 	 */
-	@RequestMapping(value = "/blog/u/{id}/group", method = RequestMethod.GET)
+	@RequestMapping(value = "/blog/u/{id}/groups", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseModel getAllArticleGroups(@PathVariable String id){
 		ResponseModel responseModel = new ResponseModel();
@@ -124,12 +124,6 @@ public class GroupController {
 		}else if(res == -4){
 			responseModel.setResponseCode(ResponseCode.NO_SUCH_GROUP.getCode());
 			responseModel.setMessage(ResponseCode.NO_SUCH_GROUP.getMessage());
-		}else if(res == -2){
-			responseModel.setResponseCode(ResponseCode.NO_SUCH_PARENT_GROUP.getCode());
-			responseModel.setMessage(ResponseCode.NO_SUCH_PARENT_GROUP.getMessage());
-		}else if(res == -3){
-			responseModel.setResponseCode(ResponseCode.PARENT_LEVEL_ILLEGAL.getCode());
-			responseModel.setMessage(ResponseCode.PARENT_LEVEL_ILLEGAL.getMessage());
 		}else if(res == -6){
 			responseModel.setResponseCode(ResponseCode.DUPLICATED_GROUP.getCode());
 			responseModel.setMessage(ResponseCode.DUPLICATED_GROUP.getMessage());

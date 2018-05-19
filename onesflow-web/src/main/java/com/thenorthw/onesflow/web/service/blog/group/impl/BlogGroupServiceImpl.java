@@ -78,7 +78,7 @@ public class BlogGroupServiceImpl implements BlogGroupService {
 
 	@Override
 	public List<BlogRArticleGroup> getArticlesInGroup(Long id, Long groupId) {
-		return null;
+		return articleGroupDao.getRsByGroupId(groupId);
 	}
 
 	/**
@@ -90,10 +90,10 @@ public class BlogGroupServiceImpl implements BlogGroupService {
 	 */
 	public int linkArticleAndGroup(Long articleId, Long groupId){
 		//判断group是否存在已经在前面步骤就已经判断过
-
+		BlogRArticleGroup blogRArticleGroup1 = getGroupIdByArticleId(articleId);
 
 		//判断是否需要更新
-		if(getGroupIdByArticleId(articleId) != null && getGroupIdByArticleId(articleId).getGroupId().equals(groupId)){
+		if(blogRArticleGroup1 != null && blogRArticleGroup1.getGroupId().equals(groupId)){
 			return 1;
 		}
 

@@ -45,19 +45,21 @@ public enum ResponseCode {
     WRONG_OLD_PASSWORD(1012,"Wrong old password"),
 
     //group
-    NO_SUCH_PARENT_GROUP(1031,"no such parent group or group level out of 2."),
-    PARENT_LEVEL_ILLEGAL(1032,"only level 1&2 group is allowed."),
+//    NO_SUCH_PARENT_GROUP(1031,"no such parent group or group level out of 2."),
+//    PARENT_LEVEL_ILLEGAL(1032,"only level 1&2 group is allowed."),
+    GROUP_ADD_ERROR(1031,"group add error."),
     NO_SUCH_GROUP(1033,"group not exists."),
     GROUP_DELETE_ERROR(1034,"group delete error."),
     DUPLICATED_GROUP(1035,"duplicated chinese group."),
     DUPLICATED_GROUP_EN(1036,"duplicated english group."),
 
+
     //tag
     TAG_ADD_ERROR(1041,"tag add error."),
     TAG_DELETE_ERROR(1042,"tag delete error."),
     NO_SUCH_TAG(1043,"no such tag."),
-
-
+    DUPLICATED_TAG(1045,"duplicated chinese group."),
+    DUPLICATED_TAG_EN(1046,"duplicated english group."),
 
 	//notification
 	NO_SUCH_NOTIFICATION(1061,"no such notification");

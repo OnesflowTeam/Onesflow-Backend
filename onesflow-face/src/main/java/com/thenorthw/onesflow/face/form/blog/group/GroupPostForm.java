@@ -1,7 +1,9 @@
 package com.thenorthw.onesflow.face.form.blog.group;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 
 /**
  * @autuor theNorthW
@@ -10,9 +12,13 @@ import javax.validation.constraints.PositiveOrZero;
  */
 public class GroupPostForm {
 	@NotNull
+	@Size(min = 1, max = 18)
+	@Pattern(regexp = "^[\\u4E00-\\u9FA5A-Za-z0-9]{1,18}$")
 	String name;
 
 	@NotNull
+	@Pattern(regexp = "^[A-Za-z0-9]{1,18}$")
+	@Size(min = 1, max = 18)
 	String en;
 
 

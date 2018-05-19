@@ -5,6 +5,7 @@ import com.thenorthw.onesflow.common.model.blog.article.BlogArticle;
 import com.thenorthw.onesflow.common.model.blog.article.BlogArticleContent;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @autuor theNorthW
@@ -28,6 +29,15 @@ public class BlogArticleDto {
 	String content;
 
 	Long group;
+	List<Long> tags;
+
+	public List<Long> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<Long> tags) {
+		this.tags = tags;
+	}
 
 	public BlogArticleDto(BlogArticle a1, BlogArticleContent a2){
 		this.id = a1.getId();

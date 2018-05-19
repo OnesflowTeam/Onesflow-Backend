@@ -30,7 +30,7 @@ public class ExceptionCatchFilter implements Filter{
             filterChain.doFilter(servletRequest,servletResponse);
         }catch (Throwable t){
             if(t instanceof OnesflowException) {
-                logger.error("exception happen, please locate the error and fix it.\n exception: {}", t);
+                logger.error("exception happen, please locate the error and fix it.\n exception: ", t);
                 ResponseModel<String> res = new ResponseModel<String>();
                 res.setResponseCode(ResponseCode.INTERNAL_SERVER_ERROR.getCode());
                 res.setMessage(ResponseCode.INTERNAL_SERVER_ERROR.getMessage());
@@ -40,7 +40,7 @@ public class ExceptionCatchFilter implements Filter{
                 outputStream.flush();
                 outputStream.close();
             }else if(t instanceof SQLException){
-                logger.error("exception happen, please locate the error and fix it.\n exception: {}", t);
+                logger.error("exception happen, please locate the error and fix it.\n exception: ", t);
 
                 ResponseModel<String> res = new ResponseModel<String>();
                 res.setResponseCode(ResponseCode.INTERNAL_SERVER_ERROR.getCode());
@@ -51,7 +51,7 @@ public class ExceptionCatchFilter implements Filter{
                 outputStream.flush();
                 outputStream.close();
             }else {
-                logger.error("exception happen, please locate the error and fix it.\n exception: {}", t);
+                logger.error("exception happen, please locate the error and fix it.\n exception: ", t);
 
                 ResponseModel<String> res = new ResponseModel<String>();
                 res.setData(null);

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thenorthw.onesflow.common.dao.blog.tag.BlogRArticleTagDao">
+
+    <resultMap id="BlogRArticleTagMap" type="BlogRArticleTag">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="article_id" property="articleId" jdbcType="BIGINT"/>
+        <result column="tag_id" property="tagId" jdbcType="BIGINT"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="fullColumns">
+        id,
+        article_id,
+        tag_id,
+        gmt_create,
+        gmt_modified
+    </sql>
+
+
+    <select id="getAllRs"  resultMap="BlogRArticleTagMap" >
+        SELECT
+        id,
+        article_id,
+        tag_id,
+        gmt_create,
+        gmt_modified
+        FROM r_blog_article_tag;
+    </select>
+
+    <select id="getRsByTagId" parameterType="Long" resultMap="BlogRArticleTagMap" >
+        SELECT
+        id,
+        article_id,
+        tag_id,
+        gmt_create,
+        gmt_modified
+        FROM r_blog_article_tag
+        WHERE tag_id = #{id};
+    </select>
+
+    <select id="getTagIdByArticleId" parameterType="long" resultMap="BlogRArticleTagMap">
+        SELECT
+        id,
+        article_id,
+        tag_id,
+        gmt_create,
+        gmt_modified
+        FROM r_blog_article_tag
+        WHERE article_id = #{id};
+    </select>
+
+    <insert id="addR" parameterType="BlogRArticleTag" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO r_blog_article_tag(
+        id,
+        article_id,
+        tag_id,
+        gmt_create,
+        gmt_modified
+        )
+        VALUES(#{id},#{articleId},#{tagId},now(),now())
+    </insert>
+
+
+    <delete id="deleteRByArticleIdAndTid" >
+        DELETE FROM r_blog_article_tag
+        WHERE article_id = #{aid} AND tag_id=#{tid};
+    </delete>
+</mapper>

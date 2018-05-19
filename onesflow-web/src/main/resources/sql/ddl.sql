@@ -274,30 +274,30 @@ CREATE TABLE `r_blog_article_group` (
 --
 -- 博客标签表
 --
-# CREATE TABLE `article_tag` (
-#   `id`           BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-#   `name`         VARCHAR(18)     NOT NULL DEFAULT 'tag',
-#   `creator`      BIGINT UNSIGNED NOT NULL,
-#   `description`  VARCHAR(58)     NOT NULL DEFAULT 'This is tag description',
-#   `gmt_create`   DATETIME        NOT NULL,
-#   `gmt_modified` DATETIME        NOT NULL,
-#   PRIMARY KEY (`id`)
-# )
-#   DEFAULT CHARACTER SET = utf8;
-#
-#
-# --
-# -- 标签和文章map,一个文章 0+个tag
-# --
-# CREATE TABLE `r_article_tag` (
-#   `id`         BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-#   `article_id` BIGINT UNSIGNED NOT NULL,
-#   `tag_id`   BIGINT UNSIGNED NOT NULL,
-#   `gmt_create`      DATETIME        NOT NULL,
-#   `gmt_modified`    DATETIME        NOT NULL,
-#   PRIMARY KEY (`id`)
-# )
-#   DEFAULT CHARACTER SET = utf8;
+CREATE TABLE `blog_tag` (
+  `id`              BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `uid`             BIGINT UNSIGNED NOT NULL ,  -- 这个tag属于哪个用户
+  `name`            VARCHAR(18)     NOT NULL DEFAULT 'blogTag',
+  `en`              VARCHAR(38)     NOT NULL DEFAULT 'blogTag-english-name',
+  `gmt_create`      DATETIME        NOT NULL,
+  `gmt_modified`    DATETIME        NOT NULL,
+  PRIMARY KEY (`id`)
+)
+  DEFAULT CHARACTER SET = utf8;
+
+
+--
+-- 标签和文章map,一个文章 0+个tag
+--
+CREATE TABLE `r_blog_article_tag` (
+  `id`         BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `article_id` BIGINT UNSIGNED NOT NULL,
+  `tag_id`   BIGINT UNSIGNED NOT NULL,
+  `gmt_create`      DATETIME        NOT NULL,
+  `gmt_modified`    DATETIME        NOT NULL,
+  PRIMARY KEY (`id`)
+)
+  DEFAULT CHARACTER SET = utf8;
 
 
 -- --------------------------------------------------------------------------  common部分  ----------------------------------------------------------------------------

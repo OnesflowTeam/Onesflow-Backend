@@ -32,9 +32,9 @@ public interface BlogArticleService {
 	 * @param blogArticleContent
 	 * @return 返回刚插入的article id
 	 */
-	public BlogArticleDto postArticle(BlogArticle blogArticle, BlogArticleContent blogArticleContent, Long groupId);
+	public BlogArticleDto postArticle(BlogArticle blogArticle, BlogArticleContent blogArticleContent, Long groupId,List<Long> tags);
 
 	public int deleteArticle(Long id, Long accountId);
 
-	public int updateArticle(BlogArticle blogArticle, BlogArticleContent blogArticleContent, Long postId,Long groupId);
+	public int updateArticle(BlogArticle blogArticle, BlogArticleContent blogArticleContent, Long postId,Long groupId,List<Long> tags);
 }

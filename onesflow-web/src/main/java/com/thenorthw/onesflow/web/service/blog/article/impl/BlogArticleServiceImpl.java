@@ -5,14 +5,18 @@ import com.thenorthw.onesflow.common.dao.blog.article.BlogArticleDao;
 import com.thenorthw.onesflow.common.dao.blog.group.BlogRArticleGroupDao;
 import com.thenorthw.onesflow.common.model.blog.article.BlogArticle;
 import com.thenorthw.onesflow.common.model.blog.article.BlogArticleContent;
+import com.thenorthw.onesflow.common.model.blog.tag.BlogRArticleTag;
+import com.thenorthw.onesflow.common.model.blog.tag.BlogTag;
 import com.thenorthw.onesflow.face.dto.blog.article.BlogArticleDto;
 import com.thenorthw.onesflow.web.service.blog.article.BlogArticleService;
 import com.thenorthw.onesflow.web.service.blog.group.BlogGroupService;
+import com.thenorthw.onesflow.web.service.blog.tag.BlogTagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,10 +38,13 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 	@Autowired
 	BlogRArticleGroupDao blogRArticleGroupDao;
 
+	@Autowired
+	BlogTagService blogTagService;
+
 	/**
 	 * 单纯的获取article的summary信息
 	 * 浏览量+1
-	 * @param id
+	 * @param
 	 * @return
 	 */
 	public BlogArticle getArticleInfo(Long aid) {
@@ -47,7 +54,7 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 
 	/**
 	 * 获取单个article的内容信息
-	 * @param id
+	 * @param
 	 * @return
 	 */
 	public BlogArticleContent getArticleContent(Long aid) {
@@ -63,9 +70,15 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 
         for(BlogArticle b : bas){
         	BlogArticleContent blogArticleContent = getArticleContent(b.getId());
+        	blogArticleContent.setContent(blogArticleContent.getContent().substring(0,blogArticleContent.getLength() > 300?300:blogArticleContent.getLength()));
         	BlogArticleDto blogArticleDto = new BlogArticleDto(b,blogArticleContent);
         	blogArticleDto.setGroup(blogGroupService.getGroupIdByArticleId(b.getId()).getGroupId());
-
+            List<BlogRArticleTag> brtl = blogTagService.getTagIdByArticleId(id);
+            List<Long> ls = new ArrayList<>(brtl.size());
+            for(BlogRArticleTag b1 : brtl){
+                ls.add(b1.getTagId());
+            }
+            blogArticleDto.setTags(ls);
         	dtos.add(blogArticleDto);
 		}
 
@@ -118,6 +131,12 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 		BlogArticleContent blogArticleContent = blogArticleContentDao.getArticleContent(id);
 		BlogArticleDto blogArticleDto = new BlogArticleDto(blogArticle, blogArticleContent);
 		blogArticleDto.setGroup(blogGroupService.getGroupIdByArticleId(id).getGroupId());
+		List<BlogRArticleTag> brtl = blogTagService.getTagIdByArticleId(id);
+		List<Long> ls = new ArrayList<>(brtl.size());
+		for(BlogRArticleTag b : brtl){
+		    ls.add(b.getTagId());
+        }
+		blogArticleDto.setTags(ls);
 		return blogArticleDto;
 	}
 
@@ -133,9 +152,9 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 	 * @param blogArticleContent
 	 * @return 返回article id
 	 */
-	public BlogArticleDto postArticle(BlogArticle blogArticle, BlogArticleContent blogArticleContent, Long groupId) {
+	public BlogArticleDto postArticle(BlogArticle blogArticle, BlogArticleContent blogArticleContent, Long groupId,List<Long> tags) {
 		//首先需要判断这个groupId是否在这个用户下面,Tag也要判定
-		if(!checkAGT(null,blogArticle.getCreator(),groupId,false)){
+		if(!checkAGT(null,blogArticle.getCreator(),groupId,tags,false)){
 		    return null;
         }
 
@@ -146,6 +165,7 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 		//判断group是否存在
 		//通过RArticleGroupService来进行插入
 		blogGroupService.linkArticleAndGroup(blogArticle.getId(),groupId);
+		blogTagService.linkArticleAndTag(blogArticle.getId(),tags);
 
 		BlogArticleDto dto = new BlogArticleDto(blogArticle, blogArticleContent);
 		dto.setGroup(groupId);
@@ -171,16 +191,17 @@ public class BlogArticleServiceImpl implements BlogArticleService {
 	 * 需要判断是否是文章创建者进行的修改
 	 * @return
 	 */
-	public int updateArticle(BlogArticle blogArticle, BlogArticleContent blogArticleContent, Long postId,Long groupId) {
+	public int updateArticle(BlogArticle blogArticle, BlogArticleContent blogArticleContent, Long postId,Long groupId,List<Long> tags) {
 
 		//只有发表文章的人才能修改文章
-		if(!checkAGT(blogArticle.getId(),postId,groupId,true)){
+		if(!checkAGT(blogArticle.getId(),postId,groupId,tags,true)){
             return -1;
         }
 
         blogArticleDao.updateArticle(blogArticle);
 		blogArticleContentDao.updateArticleContent(blogArticleContent);
         blogGroupService.linkArticleAndGroup(blogArticle.getId(),groupId);
+        blogTagService.linkArticleAndTag(blogArticle.getId(),tags);
 
         return 1;
 
@@ -197,7 +218,7 @@ public class BlogArticleServiceImpl implements BlogArticleService {
      * @param update
      * @return
      */
-	private boolean checkAGT(Long aid,Long uid,Long gid,boolean update){
+	private boolean checkAGT(Long aid,Long uid,Long gid,List<Long> tags,boolean update){
 	    if(update){
             BlogArticle inDb = blogArticleDao.getArticleById(aid);
             //表示并不存在这篇文章
@@ -208,6 +229,7 @@ public class BlogArticleServiceImpl implements BlogArticleService {
                 return false;
             }
         }
+
         //判断是否groupId是否在这个用户下
         boolean hasGroup = blogGroupService.getGroupById(uid,gid) != null;
 
@@ -215,6 +237,19 @@ public class BlogArticleServiceImpl implements BlogArticleService {
             return false;
         }
 
+        //判断tags是否在用户下
+		List<BlogTag> blogTags = blogTagService.getAllTags(uid);
+        List<Long> ls = new ArrayList<>(blogTags.size());
+
+        for(BlogTag bt : blogTags){
+        	ls.add(bt.getId());
+        }
+        if(!ls.containsAll(tags)){
+            return false;
+        }
+
         return true;
     }
+
+
 }

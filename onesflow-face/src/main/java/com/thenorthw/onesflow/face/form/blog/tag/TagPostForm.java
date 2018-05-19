@@ -1,4 +1,4 @@
-package com.thenorthw.onesflow.face.form.blog.group;
+package com.thenorthw.onesflow.face.form.blog.tag;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -9,10 +9,7 @@ import javax.validation.constraints.Size;
  * @date 19/09/2017.
  * blog: thenorthw.com
  */
-public class GroupUpdateForm {
-	@NotNull
-	Long id;
-
+public class TagPostForm {
 	@NotNull
 	@Size(min = 1, max = 18)
 	@Pattern(regexp = "^[\\u4E00-\\u9FA5A-Za-z0-9]{1,18}$")
@@ -30,14 +27,6 @@ public class GroupUpdateForm {
 
 	public void setEn(String en) {
 		this.en = en;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getName() {

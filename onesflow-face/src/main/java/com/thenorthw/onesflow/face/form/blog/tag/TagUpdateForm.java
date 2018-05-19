@@ -1,4 +1,4 @@
-package com.thenorthw.onesflow.face.form.blog.group;
+package com.thenorthw.onesflow.face.form.blog.tag;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
  * @date 19/09/2017.
  * blog: thenorthw.com
  */
-public class GroupUpdateForm {
+public class TagUpdateForm {
 	@NotNull
 	Long id;
 

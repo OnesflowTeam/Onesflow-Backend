@@ -24,7 +24,7 @@ public interface BlogArticleDao {
 
 	public BlogArticle getArticleById(Long id);
 
-	public List<BlogArticle> getArticleByIds(List<Long> ids);
+	public List<BlogArticle> getArticleByIds(@Param("ids") List<Long> ids);
 
 	public int updateArticleView(@Param("aid") Long aid);
 

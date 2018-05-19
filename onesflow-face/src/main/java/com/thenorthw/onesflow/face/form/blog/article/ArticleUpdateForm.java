@@ -29,6 +29,17 @@ public class ArticleUpdateForm {
 	@NotNull
 	String group;
 
+	@Pattern(regexp = "[1-9]\\d*(,[1-9]\\d*)*")
+	String tags;
+
+	public String getTags() {
+		return tags;
+	}
+
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
+
 	public String getGroup() {
 		return group;
 	}
