@@ -19,6 +19,7 @@ public class ArticleUpdateForm {
 	String name;
 
 	@NotNull
+	@Size(max = 20000)
 	String content;
 
 	@NotNull

@@ -5,6 +5,7 @@ import com.thenorthw.onesflow.common.dao.user.UserDao;
 import com.thenorthw.onesflow.common.model.user.LoginRecord;
 import com.thenorthw.onesflow.common.model.user.User;
 import com.thenorthw.onesflow.common.utils.JwtUtil;
+import com.thenorthw.onesflow.web.service.blog.common.BlogCommonService;
 import com.thenorthw.onesflow.web.service.blog.group.BlogGroupService;
 import com.thenorthw.onesflow.web.service.mail.MailService;
 import com.thenorthw.onesflow.web.service.user.UserService;
@@ -35,6 +36,8 @@ public class UserServiceImpl implements UserService{
     MailService mailService;
     @Autowired
     BlogGroupService blogGroupService;
+    @Autowired
+    BlogCommonService blogCommonService;
 
     @Override
     public int register(User user) {
@@ -151,6 +154,8 @@ public class UserServiceImpl implements UserService{
     public void initUserInfo(Long id) {
         //在博客模块下放入默认分类
         blogGroupService.initBlogWhenActivateUser(id);
+        //默认加入blogIntro
+        blogCommonService.addBlogIntroWhenActivate(id,"该博主还未有介绍哦，再等等吧。");
     }
 
 

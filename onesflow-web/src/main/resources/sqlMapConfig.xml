@@ -34,6 +34,7 @@
 
         <typeAlias alias="BlogTag" type="com.thenorthw.onesflow.common.model.blog.tag.BlogTag"/>
         <typeAlias alias="BlogRArticleTag" type="com.thenorthw.onesflow.common.model.blog.tag.BlogRArticleTag"/>
+        <typeAlias alias="BlogCommon" type="com.thenorthw.onesflow.common.model.blog.common.BlogCommon"/>
     </typeAliases>
 
     <!-- 指定映射器路径 -->
@@ -52,6 +53,7 @@
 
         <mapper resource="sqlMapper/blog/tag/tag.xml"/>
         <mapper resource="sqlMapper/blog/tag/rarticletag.xml"/>
+        <mapper resource="sqlMapper/blog/common.xml"/>
     </mappers>
 
 

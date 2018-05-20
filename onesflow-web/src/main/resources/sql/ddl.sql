@@ -196,6 +196,18 @@ CREATE TABLE `team` (
   DEFAULT CHARACTER SET = utf8;
 
 -- --------------------------------------------------------------------------  文章部分  ----------------------------------------------------------------------------
+--
+--
+--
+CREATE TABLE `blog_common` (
+  `id`           BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `uid`      BIGINT UNSIGNED NOT NULL,
+  `blog_intro` VARCHAR(1080) NOT NULL DEFAULT '该博主还没有介绍哦',
+  `gmt_create`   DATETIME        NOT NULL,
+  `gmt_modified` DATETIME        NOT NULL,
+  PRIMARY KEY (`id`)
+)
+  DEFAULT CHARACTER SET = utf8;
 
 --
 -- 博客文章表
