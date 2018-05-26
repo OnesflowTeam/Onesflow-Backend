@@ -268,20 +268,32 @@ CREATE TABLE `r_blog_article_group` (
 
 
 --
--- 博客评论表
+-- 博客评论表  comment最好也用page来搞定
+-- 博客评论采用楼中楼设计，分为两张表，前端在获取当前comment时候，先只获取第一级，等用户大电机查看针对第一级回复的回复后，在查看第二级回复，一共两级
+-- 回复一旦被发表最好不可修改,comment数量可以从article自有属性中看出来
 --
-# CREATE TABLE `comment`(
-#   `id` BIGINT UNSIGNED NOT NULL  AUTO_INCREMENT,
-#   `creator` BIGINT UNSIGNED NOT NULL ,
-#   `article_id`  BIGINT UNSIGNED NOT NULL ,
-#   `content` TEXT NOT NULL ,
-#   `status` TINYINT(1) NOT NULL DEFAULT 0, -- 这一行一般用来表示这个评论是否可以被显示
-#   `gmt_create`      DATETIME        NOT NULL,
-#   `gmt_modified`    DATETIME        NOT NULL,
-#   PRIMARY KEY (`id`)
-# )
-#   DEFAULT CHARACTER SET = utf8;
+CREATE TABLE `blog_comment`(
+  `id` BIGINT UNSIGNED NOT NULL  AUTO_INCREMENT,
+  `uid` BIGINT UNSIGNED NOT NULL ,
+  `aid`  BIGINT UNSIGNED NOT NULL ,
+  `content` VARCHAR(188) NOT NULL ,
+  `gmt_create`      DATETIME        NOT NULL,
+  `gmt_modified`    DATETIME        NOT NULL,
+  PRIMARY KEY (`id`)
+)
+  DEFAULT CHARACTER SET = utf8;
 
+CREATE TABLE `blog_comment_replay`(
+  `id` BIGINT UNSIGNED NOT NULL  AUTO_INCREMENT,
+  `cid` BIGINT UNSIGNED NOT NULL ,  -- 针对哪条一级评论
+  `uid` BIGINT UNSIGNED NOT NULL ,
+  `to_uid` BIGINT UNSIGNED NOT NULL ,
+  `content` VARCHAR(188) NOT NULL ,
+  `gmt_create`      DATETIME        NOT NULL,
+  `gmt_modified`    DATETIME        NOT NULL,
+  PRIMARY KEY (`id`)
+)
+  DEFAULT CHARACTER SET = utf8;
 
 --
 -- 博客标签表

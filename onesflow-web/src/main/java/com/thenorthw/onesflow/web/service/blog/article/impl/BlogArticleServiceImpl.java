@@ -73,7 +73,7 @@ public class BlogArticleServiceImpl implements BlogArticleService {
         	blogArticleContent.setContent(blogArticleContent.getContent().substring(0,blogArticleContent.getLength() > 300?300:blogArticleContent.getLength()));
         	BlogArticleDto blogArticleDto = new BlogArticleDto(b,blogArticleContent);
         	blogArticleDto.setGroup(blogGroupService.getGroupIdByArticleId(b.getId()).getGroupId());
-            List<BlogRArticleTag> brtl = blogTagService.getTagIdByArticleId(id);
+            List<BlogRArticleTag> brtl = blogTagService.getTagIdByArticleId(b.getId());
             List<Long> ls = new ArrayList<>(brtl.size());
             for(BlogRArticleTag b1 : brtl){
                 ls.add(b1.getTagId());

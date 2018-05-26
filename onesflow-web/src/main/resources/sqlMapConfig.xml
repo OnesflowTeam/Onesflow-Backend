@@ -29,6 +29,9 @@
         <typeAlias alias="BlogArticle" type="com.thenorthw.onesflow.common.model.blog.article.BlogArticle"/>
         <typeAlias alias="BlogArticleContent" type="com.thenorthw.onesflow.common.model.blog.article.BlogArticleContent"/>
 
+        <typeAlias alias="BlogComment" type="com.thenorthw.onesflow.common.model.blog.comment.BlogComment"/>
+        <typeAlias alias="BlogCommentReplay" type="com.thenorthw.onesflow.common.model.blog.comment.BlogCommentReplay"/>
+
         <typeAlias alias="BlogGroup" type="com.thenorthw.onesflow.common.model.blog.group.BlogGroup"/>
         <typeAlias alias="BlogRArticleGroup" type="com.thenorthw.onesflow.common.model.blog.group.BlogRArticleGroup"/>
 
