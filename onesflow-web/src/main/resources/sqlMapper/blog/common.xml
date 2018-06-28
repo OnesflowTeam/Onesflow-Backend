@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--CREATE TABLE `mail_record` (
+  `id`             BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `type`           TINYINT(1)     NOT NULL,
+  `content`        VARCHAR(1024) NOT NULL,
+  `gmt_create`     DATETIME        NOT NULL,
+  `gmt_modified`   DATETIME        NOT NULL,
+  PRIMARY KEY (`id`)
+)
+  DEFAULT CHARACTER SET = utf8;-->
+<mapper namespace="com.thenorthw.onesflow.common.dao.blog.common.BlogCommonDao">
+    <resultMap id="BlogCommonMaps" type="BlogCommon">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="uid" property="uid" jdbcType="BIGINT"/>
+        <result column="blog_intro" property="blogIntro" jdbcType="VARCHAR"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--当前只有blog_intro,这种insert做法是可以的，如果以后有其他属性就需要改变了-->
+    <insert id="addBlogIntro">
+      INSERT INTO blog_common(
+        `uid`,
+        `blog_intro`,
+        `gmt_create`,
+        `gmt_modified`)
+      VALUES (#{uid},#{intro},now(),now())
+    </insert>
+
+    <update id="updateBlogIntro">
+        UPDATE blog_common
+        SET blog_intro = #{intro}
+        WHERE uid=#{uid}
+    </update>
+
+    <select id="getBlogCommon" resultMap="BlogCommonMaps">
+        SELECT *
+        FROM blog_common
+        WHERE uid=#{uid}
+    </select>
+
+</mapper>

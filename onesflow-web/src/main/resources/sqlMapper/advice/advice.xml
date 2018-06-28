@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--CREATE TABLE `mail_record` (
+  `id`             BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `type`           TINYINT(1)     NOT NULL,
+  `content`        VARCHAR(1024) NOT NULL,
+  `gmt_create`     DATETIME        NOT NULL,
+  `gmt_modified`   DATETIME        NOT NULL,
+  PRIMARY KEY (`id`)
+)
+  DEFAULT CHARACTER SET = utf8;-->
+<mapper namespace="com.thenorthw.onesflow.common.dao.advice.AdviceDao">
+
+    <insert id="addAdvice">
+      INSERT INTO advice(
+        `email`,
+        `advice`,
+        `gmt_create`,
+        `gmt_modified`)
+      VALUES (#{email},#{advice},now(),now())
+    </insert>
+
+</mapper>
